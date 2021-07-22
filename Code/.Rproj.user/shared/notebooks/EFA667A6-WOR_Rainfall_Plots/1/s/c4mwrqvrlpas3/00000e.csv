@@ -1,0 +1,33 @@
+"0","df <- as_tibble(data) %>%"
+"0","  filter(Treatment %in% c(""Crop + Strip + Manure"", ""Crop + Manure""), Soil %in% c(""crop"")) %>%"
+"0","  arrange(Plot)"
+"0",""
+"0","glimpse(df)"
+"1","Rows: 360"
+"1",""
+"1","
+"
+"1","Columns: 6"
+"1",""
+"1","
+"
+"1","$ Plot      [3m[38;5;246m<chr>[39m[23m ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""4"",…
+$ Day       [3m[38;5;246m<chr>[39m[23m ""Baseline"", ""Baseline"", ""Baseline"", ""Baseline"", ""Baseline"", ""Baseline"", ""Baseline"", ""Base…
+$ Soil      [3m[38;5;246m<chr>[39m[23m ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""crop"", ""…
+$ Phylum    [3m[38;5;246m<fct>[39m[23m Actinobacteria, Bacteroidetes, Chloroflexi, Deferribacteres, Deinococcus-Thermus, Euryarc…
+$ Abundance [3m[38;5;246m<dbl>[39m[23m 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000…
+$ Treatment [3m[38;5;246m<ord>[39m[23m Crop + Strip + Manure, Crop + Strip + Manure, Crop + Strip + Manure, Crop + Strip + Manur…"
+"1",""
+"1","
+"
+"0","sum_stats <- df %>%"
+"0","  group_by(Treatment) %>%"
+"0","  get_summary_stats(Abundance, type = ""mean_se"")"
+"0",""
+"0","res.kruskal <- df %>%"
+"0","  kruskal_test(Abundance ~ Treatment)"
+"0",""
+"0","pwc <- df %>%"
+"0","  dunn_test(Abundance ~ Treatment)"
+"0",""
+"0","pwc"

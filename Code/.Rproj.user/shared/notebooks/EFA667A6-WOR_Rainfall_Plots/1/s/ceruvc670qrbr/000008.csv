@@ -1,0 +1,3 @@
+"0",""
+"0","write.table(MAB, file = ""../Tables/MAB.csv"", sep = "","", col.names = T,"
+"0","            qmethod = ""double"", row.names = F)"

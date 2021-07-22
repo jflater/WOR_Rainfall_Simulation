@@ -1,0 +1,10 @@
+"0","data <- test %>%"
+"0","  group_by(Assay, treatment) %>%"
+"0","  dplyr::summarise("
+"0","    n = n(),"
+"0","    mean = mean(norm),"
+"0","    sd = sd(norm)"
+"0","  )"
+"1","`summarise()` has grouped output by 'Assay'. You can override using the `.groups` argument.
+"
+"0","data"

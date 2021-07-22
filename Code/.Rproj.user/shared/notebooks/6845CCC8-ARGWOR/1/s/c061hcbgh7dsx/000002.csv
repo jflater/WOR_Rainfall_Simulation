@@ -1,0 +1,4 @@
+"0","soil_plot_mans <- CT_BAR_PLOT(soil) +"
+"0","  geom_bar(stat = ""identity"", aes(fill = Assay))"
+"0","    "
+"0","soil_plot_mans + scale_color_manual(aesthetics = ""fill"", values = poop_colors)"

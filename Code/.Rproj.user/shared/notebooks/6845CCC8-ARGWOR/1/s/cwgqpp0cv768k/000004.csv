@@ -1,0 +1,3 @@
+"0",""
+"0","model <- lm(SixSCount ~ treatment, data = six)"
+"0","ggqqplot(residuals(model))"

@@ -1,0 +1,5 @@
+"0","MAB <- tax_table(worle.manure) %>%"
+"0","  data.frame() %>%"
+"0","  rownames_to_column(""ASV"") %>%"
+"0","  filter(ASV %in% worle_manure_persitors)"
+"0","head(MAB)"

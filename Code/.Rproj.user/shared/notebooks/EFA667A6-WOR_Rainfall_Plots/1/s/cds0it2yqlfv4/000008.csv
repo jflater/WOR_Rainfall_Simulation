@@ -1,0 +1,82 @@
+"0","allsoil <- subset_samples(worle, matrix == ""soil"") %>%"
+"0","  filter_taxa(function(x) sum(x) >= 1, T)"
+"0",""
+"0","tax_association <- tax_table(allsoil) %>%"
+"0","  data.frame() %>%"
+"0","  rownames_to_column(""ASV"") %>%"
+"0","  mutate(ASV_Association = ifelse(ASV %in% worle_manure_persitors, ""MAB"",""SAB"")) %>%"
+"0","  mutate(asv = ASV) %>%"
+"0","  column_to_rownames(""ASV"") %>%"
+"0","  rename(ASV = asv) %>%"
+"0","  as.matrix() "
+"0",""
+"0","tax_table(allsoil) <- tax_association"
+"0",""
+"0","df <- data.frame(sample_data(allsoil))"
+"0",""
+"0","df <- df %>%"
+"0","  unite(P_D_S, c(""plot"", ""sample_day"", ""soil_type"")) "
+"0",""
+"0","df$treatment <- as.factor(df$treatment)"
+"0","df$unique_id <- as.factor(df$unique_id)"
+"0",""
+"0","sample_data(allsoil) <- sample_data(df)"
+"0",""
+"0","glimpse(data.frame(sample_data(allsoil)))"
+"1","Rows: 804"
+"1",""
+"1","
+"
+"1","Columns: 10"
+"1",""
+"1","
+"
+"1","$ unique_id        [3m[38;5;246m<fct>[39m[23m P1-s1-d1-b, P1-s1-d1-t0, P1-s1-d1-t14, P1-s1-d1-t2, P1-s1-d2-t2, P1-s1-d1-t21, P1-…
+$ experiment       [3m[38;5;246m<chr>[39m[23m ""Worle_Rainfall"", ""Worle_Rainfall"", ""Worle_Rainfall"", ""Worle_Rainfall"", ""Worle_Rai…
+$ matrix           [3m[38;5;246m<chr>[39m[23m ""soil"", ""soil"", ""soil"", ""soil"", ""soil"", ""soil"", ""soil"", ""soil"", ""soil"", ""soil"", ""s…
+$ treatment        [3m[38;5;246m<fct>[39m[23m no_manure_strip, no_manure_strip, no_manure_strip, no_manure_strip, no_manure_stri…
+$ P_D_S            [3m[38;5;246m<chr>[39m[23m ""1_Baseline_crop"", ""1_T000_crop"", ""1_T014_crop"", ""1_T002_crop"", ""1_T002_crop"", ""1_…
+$ depth            [3m[38;5;246m<chr>[39m[23m ""1"", ""1"", ""1"", ""1"", ""2"", ""1"", ""1"", ""2"", ""2"", ""2"", ""2"", ""2"", ""1"", ""1"", ""1"", ""1"", ""2…
+$ in_plot_location [3m[38;5;246m<chr>[39m[23m ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s1"", ""s2"", ""s2""…
+$ block            [3m[38;5;246m<dbl>[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ strip            [3m[38;5;246m<chr>[39m[23m ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y"", ""Y…
+$ manure_treatment [3m[38;5;246m<chr>[39m[23m ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N"", ""N…"
+"1",""
+"1","
+"
+"0","mergedsoil <- merge_samples(allsoil, ""P_D_S"")"
+"2","Warning in asMethod(object) :"
+"2"," NAs introduced by coercion
+"
+"2","Warning in asMethod(object) :"
+"2"," NAs introduced by coercion
+"
+"2","Warning in asMethod(object) :"
+"2"," NAs introduced by coercion
+"
+"2","Warning in asMethod(object) :"
+"2"," NAs introduced by coercion
+"
+"2","Warning in asMethod(object) :"
+"2"," NAs introduced by coercion
+"
+"2","Warning in asMethod(object) :"
+"2"," NAs introduced by coercion
+"
+"0","colnames(mergedsoil@tax_table)"
+"1","[1]"
+"1"," ""Kingdom""        "
+"1"," ""Phylum""         "
+"1"," ""Class""          "
+"1"," ""Order""          "
+"1"," ""Family""         "
+"1","
+"
+"1","[6]"
+"1"," ""Genus""          "
+"1"," ""ASV_Association"""
+"1"," ""ASV""            "
+"1","
+"
+"0","plot <- phylogeny_profile(mergedsoil, relative_abundance = T, classification = ""ASV_Association"")"
+"0","plot"

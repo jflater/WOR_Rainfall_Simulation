@@ -1,0 +1,6 @@
+"0","df %>%"
+"0","  group_by(plot, treatment.x) %>%"
+"0","  summarise(mean = mean(`flow_g/s`)) %>%"
+"0","  mutate(fc = 8.8773369 / mean) # fold change of 4 with respect to other"
+"1","`summarise()` has grouped output by 'plot'. You can override using the `.groups` argument.
+"

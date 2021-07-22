@@ -1,0 +1,1 @@
+"0","ggsave(filename = ""../Figures/Fig2.jpeg"", plot = last_plot(), device = ""jpeg"", width = 7, height = 6, units = ""in"", dpi = 350)"

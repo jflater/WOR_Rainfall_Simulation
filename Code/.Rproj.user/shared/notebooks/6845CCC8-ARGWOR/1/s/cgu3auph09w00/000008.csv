@@ -1,0 +1,1 @@
+"0","ggsave(filename = ""../Figures/poultrymanureCT.png"", plot = last_plot(), device = ""png"", units = ""in"", width = 3.25, height = 4.5, dpi = 300)"

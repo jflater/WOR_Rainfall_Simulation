@@ -1,0 +1,12 @@
+"0","p + 
+  stat_pvalue_manual(stat.test, hide.ns = T) +
+  theme_pubr() +
+  labs(x = ""Treatment"", y = ""16S normalized *tetL*"",
+       caption = get_pwc_label(stat.test))
+"
+"2","Don't know how to automatically pick scale for object of type function. Defaulting to continuous.
+"
+"2","Error: Aesthetics must be valid data columns. Problematic aesthetic(s): y = norm. 
+Did you mistype the name of a data column or forget to add after_stat()?
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

@@ -1,0 +1,2 @@
+"0","worle.manure <- subset_samples(worle, matrix == ""manure"") %>%"
+"0","  filter_taxa(function(x) sum(x) >= 1, T)  # Remove taxa observed less than once in these samples"

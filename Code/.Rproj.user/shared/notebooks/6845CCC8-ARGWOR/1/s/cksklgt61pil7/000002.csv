@@ -1,0 +1,143 @@
+"0","# plot standard curve from biomark standards using expected copy numbers based on amplicon length for each Assay"
+"0","plot_standard_curve_counts <- function(standards, gene){"
+"0","  "
+"0","  std <- standards %>%"
+"0","    filter(Sample_Name == Assay, Assay == gene, Value < 990) %>%"
+"0","    left_join(PC_Standards_no_NA) %>%"
+"0","    select(Assay, rConc, Value, amp_len) %>%"
+"0","    mutate(counts = as.numeric(rConc) * (1/(10^9)) * (1/660) * ((6.023*10^23)/1) * (1/as.numeric(amp_len)) * (.0067)) "
+"0","  "
+"0","  return(std)"
+"0","}"
+"0",""
+"0","stds <- unique(water$Assay) %>%"
+"0","  map( ~ plot_standard_curve_counts(st, gene = .x)) %>%"
+"0","  reduce(full_join)"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = ""Assay""
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"1","Joining, by = c(""Assay"", ""rConc"", ""Value"", ""amp_len"", ""counts"")
+"
+"0","# Check standards for NA"
+"0","stds[rowSums(is.na(stds)) > 0, ] "

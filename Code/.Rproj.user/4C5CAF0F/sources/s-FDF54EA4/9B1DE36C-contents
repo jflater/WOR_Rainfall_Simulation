@@ -1,0 +1,434 @@
+---
+title: "WOR MAB"
+output: html_document
+---
+
+To run this markdown, be sure that the "biomark-bioinformatics" folder is located in your Documents directory, or change the directory to the correct folder in the first chunk.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "~/Documents/biomark-bioinformatics/")
+```
+
+```{r libraries, include=FALSE}
+library(tidyverse)
+library(ggh4x)
+library(viridis)
+library(phyloseq)
+library(phylosmith)
+library(venn)
+library(rstatix)
+library(ggpubr)
+```
+
+# 16S amplicon data
+
+Subset to smaller phyloseq objects based on samples
+
+```{r}
+worle <- readRDS("data/Worle_curated.RDS") # Worle data
+
+# set taxa to ASV, otherwise uses the sequence as taxa name
+taxa_names(worle) <- paste0("ASV", seq(ntaxa(worle)))
+
+allsoil <- subset_samples(worle, matrix == "soil") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+# strip subset, all strip soil from baseline samples in addition to no_manure_strip treatment, not the | operator 
+worle.strip <- subset_samples(worle, matrix == "soil" & sample_day == "Baseline" & soil_type == "strip" | 
+                                matrix == "soil" & treatment == "no_manure_strip" & soil_type == "strip") %>%
+  filter_taxa(function(x) sum(x) >= 1, T) 
+
+worle.crop <- subset_samples(worle, matrix == "soil" & sample_day == "Baseline" & soil_type == "crop" | 
+                                matrix == "soil" & treatment == "no_manure_strip" & soil_type == "crop") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+worle.border <- subset_samples(worle, matrix == "soil" & sample_day == "Baseline" & soil_type == "border" | 
+                                matrix == "soil" & treatment == "no_manure_strip" & soil_type == "border") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+worle.manure <- subset_samples(worle, matrix == "manure") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+worle.water <- subset_samples(worle, matrix == "water" & unique_id != "Comp-from-P8-7-10-26-17") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+```
+
+Here is a nice trick to keep phyla colors the same:
+
+```{r}
+### Scale color for phyla, consistent phyla colors across plots
+#Function to make all phyla colors consistent
+
+phylalist <- data.frame(tax_table(worle),row.names = NULL) %>%
+  select(Phylum) %>%
+  unique() 
+phylalist$Phylum <- as.character(phylalist$Phylum)
+phylalist$Phylum[is.na(phylalist$Phylum)] <- "Unclassified"
+
+# this package will generate a pallette based on number and desired colors
+library(colorspace)
+colors <- sequential_hcl(n_distinct(phylalist), palette = "viridis") %>%
+  sample() %>% # This will help randomize the order
+  setNames(phylalist$Phylum)
+
+
+rm(worle)
+```
+
+# Manure phyla
+
+```{r}
+p <- phylogeny_profile(worle.manure, classification = 'Phylum', relative_abundance = T) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(y = "Relative abundance of phyla") +
+  scale_color_manual(aesthetics = "fill", values = colors)
+
+df <- p$data
+
+ggplot(data = df, aes(x = Sample, y = Abundance)) +
+  geom_bar(stat = "identity", aes(fill = Phylum), colour = "black") +
+  theme_classic() +
+  theme(
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    scale_color_manual(aesthetics = "fill", values = colors) +
+    labs(x = "Poultry manure replicate samples", y = "Relative abundance", fill = "Phylum") 
+
+ggsave(filename = "plots/worlemanuretaxa.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+
+# Number of taxa
+
+```{r}
+# Make a list of ASVs associated with each type of soil and manure
+worle_manure_asvs <- taxa_names(worle.manure)
+worle_crop_soil_asvs <- taxa_names(worle.crop)
+worle_strip_soil_asvs <- taxa_names(worle.strip)
+worle_border_asvs <- taxa_names(worle.border)
+worle_water_asvs <- taxa_names(worle.water)
+worle_soil_asvs <- taxa_names(allsoil)
+
+# venn diagram
+worle_vvv_diag <- venn(list("Manure_ASVs" = worle_manure_asvs, "Crop_ASVs" = worle_crop_soil_asvs, "Strip_ASVs" = worle_strip_soil_asvs, "Border_ASVs" = worle_border_asvs))
+
+# Access ASVs unique to each soil and manure and store
+worle_manure_persitors <- attr(worle_vvv_diag, "intersections")$Manure_ASVs
+worle_crop_persistors <- attr(worle_vvv_diag, "intersections")$Crop_ASVs
+worle_strip_persistors <- attr(worle_vvv_diag, "intersection")$Strip_ASVs
+worle_border_persistors <- attr(worle_vvv_diag, "intersections")$Border_ASVs
+```
+
+```{r}
+Sample_Type <- c("Manure", "Crop", "Strip", "Border")
+Number_of_taxa <- c(ntaxa(worle.manure), ntaxa(worle.crop), ntaxa(worle.strip), ntaxa(worle.border))
+Taxa_unique_to <- c(length(worle_manure_persitors), length(worle_crop_persistors), length(worle_strip_persistors), length(worle_border_persistors))
+
+df <- data.frame(Sample_Type, Number_of_taxa, Taxa_unique_to)
+df
+```
+
+```{r}
+#install.packages("ggvenn")
+library("ggvenn")
+```
+
+# Manure taxa venn diagram
+
+```{r}
+ggvenn(list("Manure" = worle_manure_asvs, "Crop" = worle_crop_soil_asvs, "Strip" = worle_strip_soil_asvs, "Border" = worle_border_asvs), set_name_size = 4, show_percentage = F) + scale_fill_viridis_d()
+
+ggsave("plots/vennASVS.png", plot = last_plot(), units = "in", width = 6.5, dpi = 300)
+```
+
+We can assign an association to each ASV based on where it was detected.
+
+```{r}
+worle.water
+```
+
+```{r}
+tax_association <- tax_table(worle.water) %>% 
+  data.frame() %>%
+  rownames_to_column("ASV") %>%
+  mutate(ASV_Association = ifelse(ASV %in% worle_manure_persitors, "MAB","SAB")) %>%
+  mutate(asv = ASV) %>%
+  column_to_rownames("ASV") %>%
+  rename(ASV = asv) %>%
+  as.matrix() 
+
+tax_table(worle.water) <- tax_association
+```
+
+# Manure in non-manured water?
+
+Our sampling depth may not have fully captured the ASVs associated with manure and soil, and we find that some MAB are present in non-manured runoff water. Let's remove those ASVs.
+
+```{r}
+ASVsinCS <- subset_samples(worle.water, treatment == "no_manure_strip") %>%
+  subset_taxa(ASV_Association == "MAB") %>% 
+  psmelt()
+
+range(ASVsinCS$Abundance)
+
+ASVsinCS <- ASVsinCS %>%
+  filter(Abundance > 0) %>%
+  select(OTU, Abundance, Phylum, Class, Order, Family, Genus)
+
+removeASVs <- ASVsinCS$OTU
+
+cleanwater <- subset_taxa(worle.water, !ASV %in% removeASVs)
+
+cleanwater 
+
+# What are the abundances of phyla in the two manured treatment's runoff water?
+
+sp <- cleanwater %>%
+  transform_sample_counts(function(x) x / sum(x)) %>%
+  subset_taxa(ASV_Association == "MAB")
+sp
+
+p <- phylogeny_profile(sp, classification = 'Phylum', treatment = c("treatment"), merge = TRUE, relative_abundance = F) +
+  facet_nested(. ~ treatment + plot, scales = "free", space = "free") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "top") +
+  guides(fill = guide_legend(ncol=3)) +
+  labs(y = "Relative abundance of MAB") +
+  scale_x_discrete()
+
+
+
+df <- p$data %>%
+  separate(col = unique_id, into = c("p", "time"), sep = "-") 
+
+levels(df$treatment) <- c("Crop + Manure", "Crop + Strip + Manure", "Crop + Strip")
+
+df$treatment <- ordered(df$treatment, levels = c("Crop + Strip", "Crop + Strip + Manure", "Crop + Manure"))
+
+ggplot(data = df, aes(x = time, y = Abundance)) +
+  geom_bar(stat = "identity", aes(fill = Phylum), colour = "black") +
+  facet_nested(. ~ treatment + plot, scales = "free", space = "free") +
+  theme_classic() +
+  theme(
+    legend.position = "top",
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    scale_color_manual(aesthetics = "fill", values = colors) +
+    labs(x = "Sample time (min) after runoff", y = "Relative abundance of MAB", fill = "Phylum") +
+  scale_x_discrete(labels = c("1" = "2.5", "2" = "7.5", "3" = "12.5", "4" = "17.5", "5" = "22.5", "6" = "27.5")) +
+  guides(fill = guide_legend(nrow = 4))
+
+ggsave(filename = "plots/manuretaxainwater.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+
+# MAB Stats by treatment
+
+MAB
+
+```{r}
+d <- df %>%
+  filter(!treatment == "Crop + Strip") %>%
+  group_by(plot, time, treatment) %>%
+  summarise(`MAB Abundance` = sum(Abundance)) %>%
+  ungroup()
+range(d$`MAB Abundance`)
+res.kruskal <- d %>%
+  kruskal_test(`MAB Abundance` ~ treatment)
+res.kruskal
+
+pwc <- d %>%
+  dunn_test(`MAB Abundance` ~ treatment, p.adjust.method = "bonferroni")
+pwc
+
+pwc <- pwc %>% add_xy_position(x = "treatment")
+
+d %>%
+  ggboxplot(x = "treatment", y = "MAB Abundance", add = "mean") +
+  stat_summary(fun.data = function(x) data.frame(y = .90, label = paste("Mean =",round(mean(x), digits = 4))), geom="text") +
+  stat_pvalue_manual(pwc, hide.ns = F) +
+  labs(
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+
+d %>%
+  group_by(treatment) %>%
+  summarise(mean = mean(`MAB Abundance`))
+
+```
+
+MAB no plot 4 or 9
+
+```{r}
+dd <- df %>%
+  filter(!plot %in% c(4,9), !treatment == "Crop + Strip") %>%
+  group_by(plot, time, treatment) %>%
+  summarise(`MAB Abundance` = sum(Abundance)) %>%
+  ungroup()
+
+res.kruskal <- dd %>%
+  kruskal_test(`MAB Abundance` ~ treatment)
+res.kruskal
+
+pwc <- dd %>%
+  dunn_test(`MAB Abundance` ~ treatment, p.adjust.method = "bonferroni")
+pwc
+
+pwc <- pwc %>% add_xy_position(x = "treatment")
+
+dd %>%
+  ggboxplot(x = "treatment", y = "MAB Abundance", add = "mean") +
+  stat_summary(fun.data = function(x) data.frame(y = .30, label = paste("Mean =",round(mean(x), digits = 4))), geom="text") +
+  stat_pvalue_manual(pwc, hide.ns = F) +
+  labs(
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+
+dd %>%
+  group_by(treatment) %>%
+  summarise(mean = mean(`MAB Abundance`))
+
+```
+
+# Abundance of MAB in runoff water
+
+```{r}
+range(d$`MAB Abundance`)
+
+df %>%
+  filter(!treatment == "Crop + Strip") %>%
+  group_by(Phylum, plot) %>%
+  summarise(
+    MeanAbund = mean(Abundance),
+    sd = sd(Abundance)
+  ) %>%
+  arrange(plot)
+
+df %>%
+  filter(!treatment == "Crop + Strip") %>%
+  ggboxplot(x = "plot", y = "Abundance", color = "Phylum") +
+  scale_color_manual(aesthetics = "color", values = colors)
+```
+
+# MAB plot pairwise
+
+```{r}
+d$plot <- as.factor(d$plot)
+
+d %>%  
+  ggboxplot(x = "plot", y = "MAB Abundance")
+
+res.kruskal <- d %>% 
+  kruskal_test(`MAB Abundance` ~ plot)
+res.kruskal
+
+pwc <- d %>% 
+  dunn_test(`MAB Abundance` ~ plot, p.adjust.method = "bonferroni")
+
+pwc
+
+pwc <- pwc %>% add_xy_position(x = "plot")
+
+d %>%
+  ggboxplot(x = "plot", y = "MAB Abundance")  +
+  stat_pvalue_manual(pwc, hide.ns = TRUE) +
+  labs(
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+```
+
+Firmicutes in manured water
+```{r}
+ddd <- df %>%
+    filter(Phylum == "Firmicutes", !treatment == "Crop + Strip") 
+ddd$plot <- as.factor(ddd$plot)
+
+res.kruskal <- ddd %>%
+  kruskal_test(Abundance ~ plot)
+
+pwc <- ddd %>%
+  dunn_test(Abundance ~ plot, p.adjust.method = "bonferroni")
+
+pwc <- pwc %>% add_xy_position(x = "plot")
+
+ddd %>% ggboxplot(x = "plot", y = "Abundance") +
+  stat_pvalue_manual(pwc, hide.ns = TRUE) +
+  labs(
+    title = "Firmicutes",
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+```
+Bacteroidetes in manured water
+```{r}
+ddd <- df %>%
+    filter(Phylum == "Bacteroidetes", !treatment == "Crop + Strip") 
+ddd$plot <- as.factor(ddd$plot)
+
+res.kruskal <- ddd %>%
+  kruskal_test(Abundance ~ plot)
+
+pwc <- ddd %>%
+  dunn_test(Abundance ~ plot, p.adjust.method = "bonferroni")
+
+pwc <- pwc %>% add_xy_position(x = "plot")
+
+ddd %>% ggboxplot(x = "plot", y = "Abundance") +
+  stat_pvalue_manual(pwc, hide.ns = TRUE) +
+  labs(
+    title = "Bacteroidetes",
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+```
+Proteobacteria in manured water
+```{r}
+ddd <- df %>%
+    filter(Phylum == "Proteobacteria", !treatment == "Crop + Strip") 
+ddd$plot <- as.factor(ddd$plot)
+
+res.kruskal <- ddd %>%
+  kruskal_test(Abundance ~ plot)
+
+pwc <- ddd %>%
+  dunn_test(Abundance ~ plot, p.adjust.method = "bonferroni")
+
+pwc <- pwc %>% add_xy_position(x = "plot")
+
+ddd %>% ggboxplot(x = "plot", y = "Abundance") +
+  stat_pvalue_manual(pwc, hide.ns = TRUE) +
+  labs(
+    title = "Proteobacteria",
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+```
+
+Proteobacteria in manured water
+```{r}
+ddd <- df %>%
+    filter(Phylum == "Proteobacteria", !treatment == "Crop + Strip") 
+ddd$plot <- as.factor(ddd$plot)
+
+res.kruskal <- ddd %>%
+  kruskal_test(Abundance ~ plot)
+
+pwc <- ddd %>%
+  dunn_test(Abundance ~ plot, p.adjust.method = "bonferroni")
+
+pwc <- pwc %>% add_xy_position(x = "plot")
+
+ddd %>% ggboxplot(x = "plot", y = "Abundance") +
+  stat_pvalue_manual(pwc, hide.ns = TRUE) +
+  labs(
+    title = "Proteobacteria",
+    subtitle = get_test_label(res.kruskal, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+    )
+```

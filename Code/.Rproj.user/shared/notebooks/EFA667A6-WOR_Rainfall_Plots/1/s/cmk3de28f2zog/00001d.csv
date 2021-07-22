@@ -1,0 +1,4 @@
+"0","ggsave(filename = ""../Figures/SupFig6.png"", plot = last_plot(), device = ""png"", width = 6.5, height = 7.5, units = ""in"", dpi = 350)
+"
+"2","`geom_smooth()` using formula 'y ~ x'
+"

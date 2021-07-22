@@ -1,0 +1,7 @@
+"0",""
+"0","test <- waterdata %>%"
+"0","  filter(!treatment == ""CS"") %>%"
+"0","  mutate(norm = replace_na(norm, 0)) %>%"
+"0","  filter(!rep %in% c(4,5,6)) %>%"
+"0","  droplevels()"
+"0","test"

@@ -1,0 +1,6 @@
+"0","Sample_Type <- c(""Manure"", ""Crop"", ""Strip"", ""Border"")"
+"0","Number_of_taxa <- c(ntaxa(worle.manure), ntaxa(worle.crop), ntaxa(worle.strip), ntaxa(worle.border))"
+"0","Taxa_unique_to <- c(length(worle_manure_persitors), length(worle_crop_persistors), length(worle_strip_persistors), length(worle_border_persistors))"
+"0",""
+"0","df <- data.frame(Sample_Type, Number_of_taxa, Taxa_unique_to)"
+"0","df"

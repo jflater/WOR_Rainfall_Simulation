@@ -1,0 +1,4 @@
+"0","krusk.test <- sig %>%"
+"0","  group_by(sample_number) %>%"
+"0","  kruskal_test(counts ~ treatment)"
+"0","krusk.test"

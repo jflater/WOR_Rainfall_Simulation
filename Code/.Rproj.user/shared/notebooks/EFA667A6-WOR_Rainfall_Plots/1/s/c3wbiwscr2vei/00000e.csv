@@ -1,0 +1,7 @@
+"0","df %>%"
+"0","  ggboxplot(x = ""Treatment"", y = ""MAB"") +"
+"0","  stat_pvalue_manual(pwc, hide.ns = T) +"
+"0","  labs("
+"0","    subtitle = get_test_label(res.kruskal, detailed = TRUE),"
+"0","    caption = get_pwc_label(pwc)"
+"0","    ) + geom_point(aes(group = Treatment, color = Plot)) "

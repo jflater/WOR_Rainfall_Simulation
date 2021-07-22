@@ -1,0 +1,8 @@
+"0","df <- fp$data %>%
+  rename(sample_number = time) %>%
+  filter(ASV_Association == ""MAB"") %>%
+  left_join(flow, by = c(""plot"", ""sample_number"")) %>%
+  select(treatment.x, plot, sample_number, Abundance, time_after_runoff_start, collection_time_sec, jare_tare_wt_g, jare_plus_runoff_wt_g, `flow_g/s`)
+"
+"2","Error in rename(., sample_number = time) : object 'fp' not found
+"

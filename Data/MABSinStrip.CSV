@@ -1,0 +1,37 @@
+Plot,Day,Soil,Treatment,MAB,SAB
+1,Baseline,strip,Crop + Strip,0,1
+1,T000,strip,Crop + Strip,0,1
+1,T002,strip,Crop + Strip,0,1
+1,T014,strip,Crop + Strip,0,1
+1,T021,strip,Crop + Strip,0,1
+1,T042,strip,Crop + Strip,0,1
+2,Baseline,strip,Crop + Strip,0,1
+2,T000,strip,Crop + Strip,0,1
+2,T002,strip,Crop + Strip,0,1
+2,T014,strip,Crop + Strip,0,1
+2,T021,strip,Crop + Strip,0,1
+2,T042,strip,Crop + Strip,0,1
+3,Baseline,strip,Crop + Strip,0,1
+3,T000,strip,Crop + Strip,0,1
+3,T002,strip,Crop + Strip,0,1
+3,T014,strip,Crop + Strip,0,1
+3,T021,strip,Crop + Strip,0,1
+3,T042,strip,Crop + Strip,0,1
+4,Baseline,strip,Crop + Strip + Manure,0,1
+4,T000,strip,Crop + Strip + Manure,0,1
+4,T002,strip,Crop + Strip + Manure,0,1
+4,T014,strip,Crop + Strip + Manure,9.845669136288675e-6,0.9999901543308637
+4,T021,strip,Crop + Strip + Manure,1.0434886309429162e-4,0.9998956511369057
+4,T042,strip,Crop + Strip + Manure,3.335895687992226e-4,0.9996664104312007
+5,Baseline,strip,Crop + Strip + Manure,0,1
+5,T000,strip,Crop + Strip + Manure,2.519023878247179e-4,0.9997480976121753
+5,T002,strip,Crop + Strip + Manure,0,1
+5,T014,strip,Crop + Strip + Manure,0,1
+5,T021,strip,Crop + Strip + Manure,0,1
+5,T042,strip,Crop + Strip + Manure,0,1
+6,Baseline,strip,Crop + Strip + Manure,0,1
+6,T000,strip,Crop + Strip + Manure,0,1
+6,T002,strip,Crop + Strip + Manure,0,1
+6,T014,strip,Crop + Strip + Manure,0,1
+6,T021,strip,Crop + Strip + Manure,2.2016894296890482e-5,0.9999779831057031
+6,T042,strip,Crop + Strip + Manure,0,1
