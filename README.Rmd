@@ -1,8 +1,0 @@
-# Welcome!
-
-This repository contains the code and data used to generate the figures,
- tables, and statistics for the manuscript titled "Prairie Strips Impact 
-on Transport of Antibiotic Resitance Indicators in Poultry Manure"
-
-For a walkthrough of the figure, table, and statistical generation in R
-see :WEBSITE
