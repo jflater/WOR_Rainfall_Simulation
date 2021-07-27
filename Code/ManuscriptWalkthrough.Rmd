@@ -47,21 +47,25 @@ Figure was is a taxonomic profile of the bacteria present in the poultry manure 
 The manure applied to each plot came from a single \~ 60 lbs batch of manure. When manure was applied to each plot, a sample of manure was taken to be analyzed for bacteria and antibiotic resistance genes. To track manure associated bacteria, we must first characterize the bacteria present. Here we have six manure samples and a bar plot representing the relative abundance of bacterial phyla in each sample. This data was generated using NGS sequencing of the 16S gene and analyzed using DADA2 to generate a count of the different taxa present in the various samples from the rainfall simulation.
 
 ```{r data import}
-worle <- readRDS("../data/Worle_curated.RDS") # Worle data
+# Worle data
+worle <- readRDS("../data/Worle_curated.RDS") 
 
 # set taxa to ASV, otherwise uses the sequence as taxa name
 taxa_names(worle) <- paste0("ASV", seq(ntaxa(worle)))
 
+# rename NA taxa as "Unclassified"
 Tax.Table <- data.frame(tax_table(worle)) %>%
   replace(is.na(.), "Unclassified")
 
+# check
 head(Tax.Table)
 
+# replace tax table 
 tax_table(worle) <- as.matrix(Tax.Table)
 ```
 
 ```{r subset to manure}
-worle.manure <- subset_samples(worle, matrix == "manure") %>%
+worle.manure <- subset_samples(worle, matrix == "manure") %>% # subset to manure
   filter_taxa(function(x) sum(x) >= 1, T)  # Remove taxa observed less than once in these samples
 ```
 
@@ -69,6 +73,8 @@ As we make plots of taxa, it's easier to understand if consistent colors are use
 
 ```{r phyla colors}
 set.seed(010101)
+
+# make a list of unique phyla
 phylalist <- data.frame(tax_table(worle), row.names = NULL) %>%
   select(Phylum) %>%
   unique() 
@@ -77,15 +83,14 @@ phylalist$Phylum <- as.character(phylalist$Phylum)
 
 library(colorspace)  # this package will generate a palette based on number and desired colors
 
+# assign color from "viridis" package to each phyla and name the list with phyla names
 colors <- sequential_hcl(n_distinct(phylalist), palette = "viridis") %>%
   setNames(sort(phylalist$Phylum))
-
-head(colors)
-
 ```
 
 ```{r figure 1 plots}
 global_size = 12 # Font size
+
 phydf <- worle.manure %>%
   tax_glom(taxrank = "Phylum") %>%
   transform_sample_counts(function(x) x / sum(x)) %>%
