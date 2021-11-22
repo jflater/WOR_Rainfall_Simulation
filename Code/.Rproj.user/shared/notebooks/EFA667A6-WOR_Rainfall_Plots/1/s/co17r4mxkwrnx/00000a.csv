@@ -1,9 +1,0 @@
-"0","ggvenn(list(""Manure"" = worle_manure_asvs, ""Crop"" = worle_crop_soil_asvs, ""Strip"" = worle_strip_soil_asvs, ""Border"" = worle_border_asvs), set_name_size = 4, show_percentage = F) + scale_fill_viridis_d()"
-"2","Warning:"
-"2"," Problem with `mutate()` column `text`.
-[34mℹ[39m `text = sprintf(""%d"", n, 100 * n/sum(n))`.
-[34mℹ[39m one argument not used by format '%d'
-"
-"2","Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing
-scale.
-"

@@ -1,8 +1,0 @@
-"0","df %>%"
-"0","  filter(Phylum == ""Bacteroidetes"") %>%"
-"0","  group_by(plot) %>%"
-"0","  summarise( "
-"0","    n=n(),"
-"0","    mean=mean(Abundance),"
-"0","    sd=sd(Abundance)) %>%"
-"0","  mutate(across(where(is.numeric) & !n & !plot, percent))"

@@ -1,4 +1,0 @@
-"0",""
-"0","six %>%"
-"0","  group_by(treatment) %>%"
-"0","  shapiro_test(SixSCount)"

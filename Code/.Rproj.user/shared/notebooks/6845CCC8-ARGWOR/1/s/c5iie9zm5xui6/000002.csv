@@ -1,4 +1,0 @@
-"0","# Welch One way ANOVA test"
-"0","res.aov2 <- six %>% "
-"0","  welch_anova_test(SixSCount ~ treatment)"
-"0","res.aov2"

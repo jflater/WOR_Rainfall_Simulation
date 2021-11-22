@@ -1,5 +1,0 @@
-"0",""
-"0","ggsave(filename = ""plots/SoilARGnormcountHeat.png"", plot = last_plot(), device = ""png"", units = ""in"", width = 6.5, height = 7.5, dpi = 300)"
-"2","Error in grDevices::dev.off() : 
-  QuartzBitmap_Output - unable to open file 'plots/SoilARGnormcountHeat.png'
-"

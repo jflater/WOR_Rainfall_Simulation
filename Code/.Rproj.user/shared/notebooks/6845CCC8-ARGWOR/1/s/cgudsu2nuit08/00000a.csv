@@ -1,4 +1,0 @@
-"0",""
-"0","worle_manure_ARGs <- attr(worle_vvv_diag, ""intersections"")$Manure_ARGs"
-"0","worle_soil_ARGs <- attr(worle_vvv_diag, ""intersections"")$Soil_ARGs"
-"0","worle_common_ARGs <- attr(worle_vvv_diag, 'intersections')$`Manure_ARGs:Soil_ARGs`"

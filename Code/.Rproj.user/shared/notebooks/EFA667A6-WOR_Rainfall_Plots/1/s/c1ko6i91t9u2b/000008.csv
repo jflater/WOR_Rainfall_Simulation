@@ -1,6 +1,0 @@
-"0",""
-"0","# Access ASVs unique to each soil and manure and store"
-"0","worle_manure_persitors <- attr(worle_vvv_diag, ""intersections"")$Manure_ASVs"
-"0","worle_crop_persistors <- attr(worle_vvv_diag, ""intersections"")$Crop_ASVs"
-"0","worle_strip_persistors <- attr(worle_vvv_diag, ""intersection"")$Strip_ASVs"
-"0","worle_border_persistors <- attr(worle_vvv_diag, ""intersections"")$Border_ASVs"

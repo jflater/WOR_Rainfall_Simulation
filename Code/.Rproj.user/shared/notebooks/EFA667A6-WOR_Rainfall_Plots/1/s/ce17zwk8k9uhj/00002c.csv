@@ -1,2 +1,0 @@
-"0","p3 <- p1 + annotation_custom(ggplotGrob(p2), xmin = ""Deinococcus-Thermus"", xmax = ""Deferribacteres"", ymin = .05, ymax = .65) "
-"0","p3 "

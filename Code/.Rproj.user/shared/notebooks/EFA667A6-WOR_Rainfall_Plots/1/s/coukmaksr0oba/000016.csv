@@ -1,7 +1,0 @@
-"0","get_test_label(res.kruskal, detailed = TRUE)"
-"1","paste(""Kruskal-Wallis, "", italic(chi)^2, ""(2)"", "" = "", ""33.47, "", 
-"
-"1","    italic(""p""), "" = "", ""<0.0001"", """", paste("", "", italic(""n""), 
-"
-"1","        "" = "", 51L))
-"

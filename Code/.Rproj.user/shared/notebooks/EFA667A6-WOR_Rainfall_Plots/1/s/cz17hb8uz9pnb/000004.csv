@@ -1,3 +1,0 @@
-"0","# Use ggsave to save plot. I chose 6.5"" wide because most word docs are 8.5"" with 2 x 1"" margins. Keep the height below 9.5"" to save room for a caption. When you insert into your document, change the size to 6.5"" wide to ensure that the plot looks visually the same. "
-"0",""
-"0","ggsave(filename = ""../Figures/Fig1.jpeg"", plot = last_plot(), device = ""jpeg"", width = 7.0, height = 6.0, units = ""in"", dpi = 350)"

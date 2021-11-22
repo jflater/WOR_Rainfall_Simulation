@@ -1,8 +1,0 @@
-"0",""
-"0","six %>%"
-"0","  levene_test(SixSCount ~ treatment)"
-"2","Warning in leveneTest.default(y = y, group = group, ...) :"
-"2","
- "
-"2"," group coerced to factor.
-"

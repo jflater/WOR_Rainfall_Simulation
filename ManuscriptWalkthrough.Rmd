@@ -1,0 +1,1643 @@
+---
+title: "Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure"
+author: "Jared Flater"
+date: "2/15/2021"
+---
+
+```{r libraries, include=FALSE}
+library(tidyverse)
+library(ggh4x)
+library(viridis)
+library(phyloseq)
+library(phylosmith)
+library(venn)
+library(ggvenn)
+library(rstatix)
+library(ggpubr)
+library(kableExtra)
+```
+
+Introduction
+
+This code was used to generate figures for a publication titled: *Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure*
+
+The manuscript is available here:
+
+The project was designed to evaluate if the conservation practice of planting strips of prairie grasses within agricultural fields might attenuate the transport of manure associated genes and bacteria.
+
+Poultry manure was applied to small plots appended with prairie strips and rainfall was simulated on the manure applied ground. Runoff water samples were collected after passing through the prairie strip and soil samples were collected before and after the rainfall simulation. In both soil and water samples we looked for and tracked the presence and abundance of manure associated bacteria and genes.
+
+Figure 1
+
+Figure was is a taxonomic profile of the bacteria present in the poultry manure that was used as a fertilizer. Manure was applied to six of nine plots, two plots received manure each day of a rainfall simulation. Rainfall simulations were performed on the nine plots over three days, one day each for a block of plots. Each block contained one plot from each treatment. The treatments were:
+
+**Crop + Strip (CS)**
+
+**Crop + Strip + Manure (CSM)**
+
+**Crop + Manure (CM)**
+
+The manure applied to each plot came from a single \~ 60 lbs batch of manure. When manure was applied to each plot, a sample of manure was taken to be analyzed for bacteria and antibiotic resistance genes. To track manure associated bacteria, we must first characterize the bacteria present. Here we have six manure samples and a bar plot representing the relative abundance of bacterial phyla in each sample. This data was generated using NGS sequencing of the 16S gene and analyzed using DADA2 to generate a count of the different taxa present in the various samples from the rainfall simulation.
+
+16S Figures
+
+```{r data import}
+# Worle data
+worle <- readRDS("Data/Worle_curated.RDS") 
+
+# set taxa to ASV, otherwise uses the sequence as taxa name
+taxa_names(worle) <- paste0("ASV", seq(ntaxa(worle)))
+
+# rename NA taxa as "Unclassified"
+Tax.Table <- data.frame(tax_table(worle)) %>%
+  replace(is.na(.), "Unclassified")
+
+# replace tax table 
+tax_table(worle) <- as.matrix(Tax.Table)
+```
+
+First, visualize differences in communities by plotting PCoA ordination of the Bray-Curtis dissimilarity
+
+```{r}
+colnames(sample_data(worle))
+sample_data(worle)$treatment[is.na(sample_data(worle)$treatment)] <- "manure"
+
+pcoa <- pcoa_phyloseq(worle, c('matrix', 'treatment'), circle = T) +
+  scale_fill_viridis_d() +
+  theme_minimal()
+
+pcoa
+ggsave(filename = "Figures/PCoA.jpeg", plot = pcoa, device = "jpeg", width = 7.0, height = 6.0, units = "in", dpi = 350)
+```
+
+```{r subset to manure}
+worle.manure <- subset_samples(worle, matrix == "manure") %>% # subset to manure
+  filter_taxa(function(x) sum(x) >= 1, T)  # Remove taxa observed less than once in these samples
+```
+
+As we make plots of taxa, it's easier to understand if consistent colors are used for the various phyla. We can assign a color to each of these phyla then manually color plots based on this.
+
+```{r phyla colors}
+set.seed(010101)
+
+# make a list of unique phyla
+phylalist <- data.frame(tax_table(worle), row.names = NULL) %>%
+  select(Phylum) %>%
+  unique() 
+phylalist$Phylum <- as.character(phylalist$Phylum)
+
+
+library(colorspace)  # this package will generate a palette based on number and desired colors
+
+# assign color from "viridis" package to each phyla and name the list with phyla names
+colors <- sequential_hcl(n_distinct(phylalist), palette = "viridis") %>%
+  setNames(sort(phylalist$Phylum))
+```
+
+# Figure 1
+
+Let's calculate the relative abundance of each phyla in the manure and generate summary statistics (mean, standard error, and interquartile range)
+```{r figure 1 plots}
+global_size = 12 # Font size
+phydf <- worle.manure %>%
+  tax_glom(taxrank = "Phylum") %>%
+  transform_sample_counts(function(x) x / sum(x)) %>%
+  psmelt()  # Take manure phyloseq object and glom taxa at phyla level. Transform counts to relative abundance and melt to a data frame. 
+
+summary <- phydf %>%  # Make a plot
+  group_by(Phylum) %>%
+  summarise( 
+    n=n(),
+    mean=mean(Abundance),
+    sd=sd(Abundance)
+  ) %>%
+  mutate(se = sd/sqrt(n))  %>%
+  mutate(ic = se * qt((1-0.05)/2 + .5, n-1)) %>%
+  arrange(-mean)
+
+summary$Phylum <- factor(summary$Phylum, levels = summary$Phylum[order(-summary$mean)]) # arrange won't change order of Phylum factor levels
+
+p1 <- ggplot(summary) +
+  theme_classic() +
+  geom_bar(aes(x = Phylum, y = mean, fill = Phylum), stat = "identity", 
+           position = position_dodge(width = 0.75)) +
+  geom_errorbar( aes(x = reorder(Phylum, -mean), ymin = mean - ic, ymax = mean + ic), width = 0.2, colour = "black", size= 0.5) +
+  labs(y = "Relative abundance of phyla", x = "Phylum") +
+  scale_fill_manual(values = colors) +
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  geom_text(x = "Proteobacteria", y = 0.60, label = "A", size = 8, family = "Times") +
+  theme(text = element_text(size = global_size, family = "Times")) 
+  
+p1
+
+# We can make a second smaller plot to show the abundances of the low abundance phyla
+
+p2 <- ggplot(subset(summary, Phylum %in% tail(summary$Phylum, -5))) +
+  theme_classic() +
+  geom_bar(aes(x = reorder(Phylum, -mean), y = mean, fill = Phylum), stat = "identity", 
+           position = position_dodge(width = 0.75)) +
+  geom_errorbar( aes(x = reorder(Phylum, -mean), ymin = mean - ic, ymax = mean + ic), width = 0.2, colour = "black", size= 0.5) +
+  labs(x = NULL, y = NULL) +
+  scale_fill_manual(values = colors) +
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  geom_text(x = "Tenericutes", y = 0.0060, label = "B", size = 8, family = "Times") +
+  theme(text = element_text(size = global_size, family = "Times")) 
+
+p2
+
+p3 <- p1 + annotation_custom(ggplotGrob(p2), xmin = "Deinococcus-Thermus", xmax = "Deferribacteres", ymin = .05, ymax = .65) 
+
+p3
+```
+
+We can see that the manure is mostly represented by five phyla, Firmicutes, Proteobacteria, Bacteroidetes, Actinobacetria, and Deinococcus-Thermus.
+
+```{r fig 1 save}
+# Use ggsave to save plot. I chose 6.5" wide because most word docs are 8.5" with 2 x 1" margins. Keep the height below 9.5" to save room for a caption. When you insert into your document, change the size to 6.5" wide to ensure that the plot looks visually the same. 
+
+ggsave(filename = "../Figures/Fig1.jpeg", plot = last_plot(), device = "jpeg", width = 7.0, height = 6.0, units = "in", dpi = 350)
+```
+
+The specific abundances of phyla are:
+
+```{r}
+phydf %>%
+  group_by(Phylum) %>%
+  summarise(Mean = mean(Abundance), StdDev = sd(Abundance), min = min(Abundance), max = max(Abundance)) %>%
+  arrange(-Mean)
+```
+
+# Supp Figure S2
+
+Abundance of manure associated taxa
+
+Now let's look at the number of unique taxa in the various samples.
+
+```{r}
+# strip subset, all strip soil from baseline samples in addition to no_manure_strip treatment, note the | operator 
+worle.strip <- subset_samples(worle, matrix == "soil" & sample_day == "Baseline" & soil_type == "strip" | 
+                                matrix == "soil" & treatment == "no_manure_strip" & soil_type == "strip") %>%
+  filter_taxa(function(x) sum(x) >= 1, T) 
+
+worle.crop <- subset_samples(worle, matrix == "soil" & sample_day == "Baseline" & soil_type == "crop" | 
+                                matrix == "soil" & treatment == "no_manure_strip" & soil_type == "crop") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+worle.border <- subset_samples(worle, matrix == "soil" & sample_day == "Baseline" & soil_type == "border" | 
+                                matrix == "soil" & treatment == "no_manure_strip" & soil_type == "border") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+worle.manure <- subset_samples(worle, matrix == "manure") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+worle.water <- subset_samples(worle, matrix == "water" & unique_id != "Comp-from-P8-7-10-26-17") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+```
+
+
+```{r}
+# Make a list of ASVs associated with each type of soil and manure
+worle_manure_asvs <- taxa_names(worle.manure)
+worle_crop_soil_asvs <- taxa_names(worle.crop)
+worle_strip_soil_asvs <- taxa_names(worle.strip)
+worle_border_asvs <- taxa_names(worle.border)
+worle_water_asvs <- taxa_names(worle.water)
+
+# venn diagram
+worle_vvv_diag <- venn(list("Manure_ASVs" = worle_manure_asvs, "Crop_ASVs" = worle_crop_soil_asvs, "Strip_ASVs" = worle_strip_soil_asvs, "Border_ASVs" = worle_border_asvs))
+
+# Access ASVs unique to each soil and manure and store
+worle_manure_persitors <- attr(worle_vvv_diag, "intersections")$Manure_ASVs
+worle_crop_persistors <- attr(worle_vvv_diag, "intersections")$Crop_ASVs
+worle_strip_persistors <- attr(worle_vvv_diag, "intersection")$Strip_ASVs
+worle_border_persistors <- attr(worle_vvv_diag, "intersections")$Border_ASVs
+```
+
+We have 1017 "MAB" taxa
+
+```{r}
+Sample_Type <- c("Manure", "Crop", "Strip", "Border")
+Number_of_taxa <- c(ntaxa(worle.manure), ntaxa(worle.crop), ntaxa(worle.strip), ntaxa(worle.border))
+Taxa_unique_to <- c(length(worle_manure_persitors), length(worle_crop_persistors), length(worle_strip_persistors), length(worle_border_persistors))
+
+df <- data.frame(Sample_Type, Number_of_taxa, Taxa_unique_to)
+df
+```
+
+Make a taxonomy table of the ASVs unique to manure
+
+```{r}
+MAB <- tax_table(worle.manure) %>%
+  data.frame() %>%
+  rownames_to_column("ASV") %>%
+  filter(ASV %in% worle_manure_persitors)
+head(MAB)
+
+write.table(MAB, file = "../Tables/MAB.csv", sep = ",", col.names = T,
+            qmethod = "double", row.names = F)
+```
+
+```{r}
+ggvenn(list("Manure" = worle_manure_asvs, "Crop" = worle_crop_soil_asvs, "Strip" = worle_strip_soil_asvs, "Border" = worle_border_asvs), set_name_size = 4, show_percentage = F) + scale_fill_viridis_d()
+
+ggsave("../Figures/SuppFig2.png", plot = last_plot(), units = "in", width = 6.5, dpi = 300)
+```
+
+We will assign taxa to two groups, soils associated and manure associated bacteria: "SAB" and "MAB"
+
+```{r}
+tax_association <- tax_table(worle.water) %>% 
+  data.frame() %>%
+  rownames_to_column("ASV") %>%
+  mutate(ASV_Association = ifelse(ASV %in% worle_manure_persitors, "MAB","SAB")) %>%
+  mutate(asv = ASV) %>%
+  column_to_rownames("ASV") %>%
+  rename(ASV = asv) %>%
+  as.matrix() 
+
+tax_table(worle.water) <- tax_association
+
+```
+
+Now subset water samples to just "MAB".
+
+```{r}
+# Due to sequencing depth, we have a few MAB detected in CS plots, let's note them and remove them for "clean" plot. 
+ASVsinCS <- subset_samples(worle.water, treatment == "no_manure_strip") %>%
+  subset_taxa(ASV_Association == "MAB") %>% 
+  psmelt()
+
+ASVsinCS <- ASVsinCS %>%
+  filter(Abundance > 0) %>%
+  select(OTU, Abundance, Phylum, Class, Order, Family, Genus)
+
+removeASVs <- ASVsinCS$OTU
+
+cleanwater <- subset_taxa(worle.water, !ASV %in% removeASVs)
+
+
+sp <- cleanwater %>%
+  transform_sample_counts(function(x) x / sum(x)) %>%
+  subset_taxa(ASV_Association == "MAB")
+sp
+```
+# Figure 2
+```{r}
+p <- phylogeny_profile(sp, classification = 'Phylum', treatment = c("treatment"), merge = TRUE, relative_abundance = F) +
+  facet_nested(. ~ treatment + plot, scales = "free", space = "free") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "top") +
+  guides(fill = guide_legend(ncol=3)) +
+  labs(y = "Relative abundance of MAB") +
+  scale_x_discrete()
+
+df <- p$data %>%
+  separate(col = unique_id, into = c("p", "time"), sep = "-") 
+
+levels(df$treatment) <- c("CL", "CSL", "CS")
+
+df$treatment <- ordered(df$treatment, levels = c("CS", "CSL", "CL")) 
+
+breaks <- df %>%
+  filter(plot == 4, time == 3) %>%
+  group_by(Phylum) %>%
+  summarise(mean = mean(Abundance)) %>%
+  arrange(mean) %>% 
+  select(Phylum) 
+
+df$Phylum <- factor(df$Phylum, levels = breaks$Phylum)
+
+mabbarplot <- ggplot(data = df, aes(x = time, y = Abundance, fill = Phylum)) +
+  geom_bar(stat = "identity", colour = "black") +
+  facet_nested(. ~ treatment + plot, scales = "free", space = "free") +
+  theme_classic() +
+  theme(
+    text = element_text(size = global_size, family = "Times"),
+    legend.position = "top",
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    scale_fill_manual(aesthetics = "fill", values = subset(colors, names(colors) %in% df$Phylum), breaks = breaks$Phylum) +
+    labs(x = "Sample time (min) after runoff", y = "Relative abundance of LAB") +
+  scale_x_discrete(labels = c("1" = "2.5", "2" = "7.5", "3" = "12.5", "4" = "17.5", "5" = "22.5", "6" = "27.5")) +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  guides(fill = guide_legend(nrow = 4))
+
+mabbarplot
+```
+
+The relative abundance of phyla that represent the "MAB" taxa detected in runoff water.
+
+```{r}
+ggsave(filename = "../Figures/Fig2.jpeg", plot = last_plot(), device = "jpeg", width = 7, height = 6, units = "in", dpi = 350)
+```
+
+# Figure 3
+
+Only plot 8 most abundant phyla to keep plot cleaner
+
+```{r}
+summary <- df %>%
+  filter(!treatment == "CS") %>% # Remove no manure treatment
+  group_by(Phylum, 
+           plot, 
+           treatment) %>%
+  summarise( 
+    n=n(),
+    mean=mean(Abundance),
+    sd=sd(Abundance)) %>%
+  mutate(se = sd/sqrt(n))  %>%
+  mutate(ic = se * qt((1-0.05)/2 + .5, n-1)) %>%
+  arrange(plot, -mean) %>% 
+  ungroup()
+
+EightPhyla <- summary %>%
+  group_by(Phylum) %>%
+  mutate(mean = mean(mean)) %>%
+  arrange(-mean) %>%
+  select(Phylum) %>%
+  distinct() %>%
+  head(8) # Use head with n = 8 to select eight phyla
+
+summary$plot <- as.factor(summary$plot)
+
+summary <- summary %>%
+  filter(Phylum %in% EightPhyla$Phylum)
+
+ggplot(summary, aes(x = reorder(Phylum, -mean), y = mean, fill = plot)) +
+  geom_bar(stat = "identity", 
+           position = position_dodge(width = 1)) +
+  geom_errorbar(aes(x = reorder(Phylum, -mean), ymin = mean - ic, ymax = mean + ic), 
+           position = position_dodge(width = 1), width = 0.2, colour = "black", size= 0.5) +
+  labs(y = "Relative abundance of phyla", x = "Phylum") +
+  facet_grid( ~ treatment) +
+  theme_classic() + 
+  theme(text = element_text(size = global_size, family = "Times"),
+    axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_fill_viridis_d(name = "Plot") +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) # Here we can multiply the relative abundance by 100 and add a % mark, note that any tables generated will still need to be multiplied by 100. 
+
+ggsave(filename = "../Figures/Fig3.jpeg", plot = last_plot(), device = "jpeg", width = 7, height = 6, units = "in", dpi = 350)
+```
+
+LAB treatment mean
+```{r}
+df %>%
+  group_by(treatment, plot, time) %>%
+  summarise(
+    MAB_Abundance = sum(Abundance)) %>% 
+  ungroup() %>%
+  group_by(treatment, plot) %>%
+  summarise(
+    mean_mab = mean(MAB_Abundance)) %>%
+  ungroup() %>%
+  group_by(plot) %>%
+  summarise(trtMeanMab = mean(mean_mab))
+
+
+```
+
+
+ARG Figures
+
+```{r}
+library(tidyverse)
+library(viridisLite)
+library(ggh4x)
+library(ggpubr)
+library(rstatix)
+library(ggtext)
+```
+
+```{r}
+df <- readRDS("~/Desktop/biomark-bioinformatics/data/metawithbiomark.RDS") 
+```
+
+```{r}
+standard <- df %>%
+  filter(sample_type %in% "standard")
+```
+
+```{r}
+PC_Standards_no_NA <- readRDS("~/Desktop/biomark-bioinformatics/data/ampliconlengths.RDS")
+
+PC_Standards_no_NA
+```
+
+Calculating limit of detection for each gene
+
+```{r}
+filtered_standard <- standard %>% 
+  filter(Sample_Name == Assay)
+
+lod_max_by_gene <- filtered_standard %>% 
+  group_by(rConc, Sample_Name) %>%
+  filter(any(Call == "Pass")) %>% 
+  mutate(Value = as.numeric(Value)) %>% 
+  filter(!Call == "Flag") %>%
+  summarise(max_lod = max(Value)) %>% 
+  group_by(Sample_Name) %>% 
+  slice_max(max_lod) 
+
+lod_max_by_gene %>% 
+  ggplot(aes(Sample_Name, max_lod)) +
+  geom_col(aes(fill = rConc)) +
+  theme_light() +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1)
+  ) +
+  scale_y_continuous(expand = expansion(add = c(0, 0), mult = c(0, 0.1))) 
+
+counts <- filtered_standard %>%
+  group_by(rConc, Sample_Name) %>% 
+  filter(any(Call == "Pass")) %>% 
+  select(Sample_Name, Assay, rConc, Value, Call)  %>%
+  ungroup() %>%  
+  filter(!Call == "Flag") %>%
+    left_join(PC_Standards_no_NA) %>%
+    select(Assay, rConc, Value, amp_len) %>%
+    mutate(counts = as.numeric(rConc) * (1/(10^9)) * (1/660) * ((6.023*10^23)/1) * (1/as.numeric(amp_len)) * (.0067)) %>%
+    mutate(Value = as.numeric(Value))
+```
+
+```{r}
+lod_max_by_gene
+```
+
+```{r, fig.width=12, fig.height=12}
+lm_eqn = function(df){
+    m = lm(data = df, formula = as.numeric(Value) ~ log10(counts + 1))
+    b = coef(m)[2]  
+    data.frame(
+      eff = round(100*((10^(-1/b))-1), digits = 2),
+      r2 = format(summary(m)$r.squared, digits = 3),
+      LOD = round(max(df$Value), digits = 2),
+      Intercept = round(coef(m)[1], digits = 2),
+      Slope = round(coef(m)[2], digits = 2)
+    )
+}
+
+st_splits <-  counts %>% 
+  group_by(Assay) %>% 
+  group_split() 
+
+eqs <- st_splits %>% 
+  lapply(., lm_eqn) %>% 
+  bind_rows()
+
+labels <- lapply(st_splits, slice_head, n = 1) %>% 
+  bind_rows() %>% 
+  select(Assay) %>% 
+  bind_cols(eqs) %>% 
+  mutate(eq_label = paste0("LOD = ", LOD, "<br>r^2 = ", r2, "<br>Efficiency = ", eff, "<br>Slope = ", Slope, "<br>Intercept = ", Intercept))
+
+SCPlots <- counts %>%
+  ggplot(aes(as.numeric(log10(counts + 1)), as.numeric(Value))) +
+  geom_point() +
+  facet_wrap( ~ Assay, scales = "free") + 
+  theme(
+    panel.border = element_rect(color = "black", size = 1, fill = NA),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.spacing = unit(0.5, "lines"),
+    strip.background = element_rect(color = "black", size = 1, fill = NA),
+  ) + 
+  labs(
+    x = "Log10 (gene copies per reaction)",
+    y = "Ct"
+  ) + 
+  scale_x_continuous(limits = c(0, 7), breaks = seq(0, 7, 1), expand = c(0, 0)) + 
+  scale_y_continuous(limits = c(0, 25)) +
+  geom_smooth(aes(group=1), method="lm", se=FALSE) + 
+  ggtext::geom_richtext(data = labels, aes(x = 2, y = 5, label = eq_label),
+                        size = 4, fontface = "bold", inherit.aes = FALSE) +
+  theme(
+    text = element_text(size = 12, family = "Times"),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = "top",
+    legend.key.width = unit(.75, "in")
+  ) 
+
+SCPlots
+
+# Save a table of the information from each curve
+LODtable <- labels %>%
+  select(!eq_label)
+LODtable
+
+write_csv(LODtable, file = "../Data/standardcurves.csv")
+```
+
+Calculating counts in an environmental sample
+
+```{r}
+counts
+```
+
+Environment Ct values
+
+```{r}
+water <- df %>%
+  filter(sample_type %in% "water", !Sample_Name == "Supply_Water")
+water
+
+soil <- df %>%
+  filter(sample_type %in% "soil")
+soil
+
+unique(water$Sample_Name)
+```
+
+```{r}
+get_counts <- function(stddf, ctdf, gene){
+  #stddf <- counts # use to test
+  #ctdf <- water # use to test
+  #gene <- "tetM" # use to test
+  std <- stddf %>%
+    filter(Assay == gene)
+  ctd <- ctdf %>%
+    filter(Assay == gene)
+  inverse.lm <- lm(data = std, formula = log10(counts+1) ~ as.numeric(Value)) # Note log10 transformation
+  
+  val2 <- ctd$Value
+  
+  ctd$counts <- 10 ^ predict(inverse.lm ,data.frame(Value = val2), interval = "predict")[,1] 
+
+  return(ctd)
+}
+```
+
+```{r}
+unique(counts$Assay)
+unique(water$Assay)
+```
+
+By changing high Ct values to NA, we clean up the heatmap by converting these "non detects" to gray color tiles
+
+```{r}
+# Change high Ct values to NA
+water$Value[water$Value > 30] <- NA
+soil$Value[soil$Value > 30] <- NA
+```
+
+```{r, echo=F}
+dput(unique(counts$Assay))
+
+WaterCounts <- c("tetbP", "sul1 NEW", "IS6100", "erm(C)", "16S_Eub_338_518", 
+"strB", "aadA9", "tetG_F", "sul2", "tetW", 
+"tetT", "tetL", "tetM", "tetH", "tetX") %>%
+  map( ~ get_counts(counts, water, gene = .x)) %>%
+  reduce(full_join)
+
+SoilCounts <- c("tetbP", "sul1 NEW", "IS6100", "erm(C)", "16S_Eub_338_518", 
+"strB", "aadA9", "tetG_F", "sul2", "tetW", 
+"tetT", "tetL", "tetM", "tetH", "tetX") %>%
+  map( ~ get_counts(counts, soil, gene = .x)) %>%
+  reduce(full_join)
+```
+
+```{r}
+WaterCounts <- WaterCounts %>% # Add classes to ARGs
+  mutate(gene_class = case_when(Assay %in% unique(WaterCounts$Assay[grepl("^[aa]", WaterCounts$Assay)]) ~ "AMG",
+                                Assay %in% unique(WaterCounts$Assay[grepl("^[erm]", WaterCounts$Assay)]) ~ "MLSB",
+                                Assay %in% unique(WaterCounts$Assay[grepl("^[sul]", WaterCounts$Assay)]) ~ "Sulfa",
+                                Assay %in% unique(WaterCounts$Assay[grepl("tet", WaterCounts$Assay)]) ~ "Tet",
+                                Assay %in% c("intl1", "intl2", "intl3", "IS1247", "IS6100", "tnpA2",
+                                              "tnpA5", "tnpA6", "tnpA3", "intI1F165_clinical", "tnpA1", "int1-a-marko", "tnpA7") ~ "MGE", 
+                                Assay %in% c("cadC", "cmr") ~ "HM",
+                                Assay == c("16S_Eub_338_518") ~ "16S"))
+
+WaterCounts$gene_class_f = factor(WaterCounts$gene_class, # Order the classes
+                                levels = c('AMG', 'MLSB', 'Sulfa', "Tet", "MGE", "HM", "16S"))
+
+```
+
+```{r}
+SoilCounts <- SoilCounts %>% # Add classes to ARGs
+  mutate(gene_class = case_when(Assay %in% unique(SoilCounts$Assay[grepl("^[aa]", SoilCounts$Assay)]) ~ "AMG",
+                                Assay %in% unique(SoilCounts$Assay[grepl("^[erm]", SoilCounts$Assay)]) ~ "MLSB",
+                                Assay %in% unique(SoilCounts$Assay[grepl("^[sul]", SoilCounts$Assay)]) ~ "Sulfa",
+                                Assay %in% unique(SoilCounts$Assay[grepl("tet", SoilCounts$Assay)]) ~ "Tet",
+                                Assay %in% c("intl1", "intl2", "intl3", "IS1247", "IS6100", "tnpA2",
+                                              "tnpA5", "tnpA6", "tnpA3", "intI1F165_clinical", "tnpA1", "int1-a-marko", "tnpA7") ~ "MGE", 
+                                Assay %in% c("cadC", "cmr") ~ "HM",
+                                Assay == c("16S_Eub_338_518") ~ "16S"))
+
+SoilCounts$gene_class_f = factor(SoilCounts$gene_class, # Order the classes
+                                levels = c('AMG', 'MLSB', 'Sulfa', "Tet", "MGE", "HM", "16S"))
+```
+
+```{r}
+norm <- WaterCounts %>%
+  unite(ID, c("plot", "sample_number", "Assay"), sep = ".", remove = F) %>%
+  dplyr::group_by(plot, sample_number, Assay) %>%
+  dplyr::mutate(rep = seq_along(ID)) %>%
+  select(plot, sample_number, rep, treatment, Assay, gene_class, counts, Value) %>%
+  ungroup()
+```
+```{r}
+soilnorm <- SoilCounts %>%
+  unite(ID, c("plot", "sample_day", "sample_number", "soil_type", "Assay"), sep = ".", remove = F) %>%
+  dplyr::group_by(plot, sample_day, sample_number, soil_type, Assay) %>%
+  dplyr::mutate(rep = seq_along(ID)) %>%
+  select(plot, sample_number, sample_day, soil_type, rep, treatment, Assay, gene_class, counts, Value) %>%
+  ungroup()
+```
+
+```{r}
+SixS <- norm %>%
+  filter(Assay == "16S_Eub_338_518") %>%
+  dplyr::rename(SixSCount = counts) %>%
+  select(plot, sample_number, rep, SixSCount, treatment) 
+
+SoilSixS <- soilnorm %>%
+  filter(Assay == "16S_Eub_338_518") %>%
+  dplyr::rename(SixSCount = counts) %>%
+  select(plot, sample_number, sample_day, soil_type, rep, SixSCount, treatment)
+
+dfdf <- norm %>%
+  left_join(SixS, by = c("plot", "sample_number", "rep", "treatment")) %>%
+  filter(!Assay == "16S_Eub_338_518")
+
+soildfdf <- soilnorm %>%
+  left_join(SoilSixS, by = c("plot", "sample_number", "sample_day", "soil_type", "rep", "treatment")) %>%
+  filter(!Assay == "16S_Eub_338_518")
+
+# Now got to divide each count of each gene by the 16s number
+
+test <- WaterCounts %>% # Order ARGs based on class
+  arrange(gene_class) 
+
+levels <- dput(levels(factor(test$Assay))) # dput ftw!!!
+dfdf$treatment = factor(dfdf$treatment, 
+                             levels = c('WCS', 'WCSM', 'WCM'))
+
+# Also need to set the order of the soil data
+soildfdf$treatment = factor(soildfdf$treatment, 
+                             levels = c('WCS', 'WCSM', 'WCM'))
+
+dfdf$sample_number <- as.factor(dfdf$sample_number)
+levels(dfdf$sample_number) <- list("2.5" = "1", "7.5" = "2", "12.5" = "3", "17.5" = "4", "22.5" = "5", "27.5" = "6")
+```
+
+```{r}
+waterdata <- dfdf %>%
+  mutate(norm = counts/SixSCount)
+
+soildata <- soildfdf %>%
+  mutate(norm = counts/SixSCount)
+```
+
+Unfiltered counts in water
+
+```{r}
+levels(waterdata$treatment) <- list("CS" = "WCS", "CSL" = "WCSM", "CL" = "WCM")
+
+heatmap2 <- ggplot(waterdata, aes(as.factor(sample_number), ordered(Assay, levels = levels))) +
+  geom_tile(aes(fill = norm), colour = "white", size = 0.1) +
+  scale_fill_viridis_c(name = "ARG copies \nnormalized by 16S")  +
+  labs(x = "Sample time (min) after runoff", y = "ARG") +
+  facet_nested(gene_class ~ treatment + plot, scales = "free", space = "free") + theme_classic() +
+  theme(
+    text = element_text(size = 12, family = "Times"),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = "top",
+    legend.key.width = unit(.75, "in")
+  ) 
+heatmap2
+```
+
+```{r}
+ggplot(waterdata, aes(as.factor(sample_number), ordered(Assay, levels = levels))) +
+  geom_tile(aes(fill = counts), colour = "white", size = 0.1) +
+  scale_fill_viridis_c(name = "ARG copies")  +
+  labs(x = "Sample time (min) after runoff", y = "ARG") +
+  facet_nested(gene_class ~ treatment + plot, scales = "free", space = "free") + theme_classic() +
+  theme(
+    text = element_text(size = 12, family = "Times"),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = "top",
+    legend.key.width = unit(.75, "in")
+  ) 
+```
+
+Filtered counts in water
+
+```{r}
+waterwithlod <- waterdata %>%
+  left_join(lod_max_by_gene, by = c("Assay" = "Sample_Name")) 
+  
+waterwithlod$norm[waterwithlod$Value >= waterwithlod$max_lod] <- NA
+
+waterwithlod$counts[waterwithlod$Value >= waterwithlod$max_lod] <- NA
+
+levels(waterwithlod$treatment) <- list("CS" = "WCS", "CSL" = "WCSM", "CL" = "WCM")
+```
+
+# Figure 4
+```{r}
+#waterwithlod <- waterwithlod %>% mutate(Assay = str_replace(Assay, "tetG_F", "tetG"))
+
+#waterwithlod %>% 
+#  mutate(Assay = str_replace(Assay, "tetG_F", "tetG")) %>%
+#  count(Assay)
+
+heatmap <- ggplot(waterwithlod, aes(as.factor(sample_number), ordered(Assay, levels = levels))) +
+  geom_tile(aes(fill = norm), colour = "white", size = 0.1) +
+  scale_fill_viridis_c(name = "ARG copies \nnormalized by 16S")  +
+  labs(x = "Sample time (min) after runoff", y = "ARG") +
+  facet_nested(gene_class ~ treatment + plot, scales = "free", space = "free") + theme_classic() +
+  theme(
+    text = element_text(size = 12, family = "Times"),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = "top",
+    legend.key.width = unit(.75, "in")) 
+
+heatmap
+
+heatmap$data %>%
+  count(Assay)
+```
+
+* Astrik on manure ARGs
+```{r}
+labels <- c(tetbP = "* tetbP ", 
+            aphA3 = "* aphA3 ", 
+            tetT = "* tetT ", 
+            tetW = "* tetW ", 
+            `erm(C)` = "* erm(C)", 
+            tetX = "* tetX ", 
+            tnpA1 = "* tnpA1 ",
+            tetH = "* tetH ", 
+            lnuA = "* lnuA ", 
+            tnpA5 = "* tnpA5 ", 
+            tetM = "* tetM ", 
+            cmr = "* cmr ",
+            tetG_F = "tetG ",
+            `sul1 NEW` = "sul1")
+
+labels
+```
+```{r}
+heatmap +
+  scale_y_discrete(
+    name = NULL,
+    labels = labels
+  ) 
+
+
+ggsave(filename = "../Figures/Fig4.jpeg", plot = last_plot(), device = "jpeg", units = "in", width = 7, height = 7.5, dpi = 350)
+```
+
+```{r}
+ggplot(waterwithlod, aes(as.factor(sample_number), ordered(Assay, levels = levels))) +
+  geom_tile(aes(fill = counts), colour = "white", size = 0.1) +
+  scale_fill_viridis_c(name = "ARG copies")  +
+  labs(x = "Sample time (min) after runoff", y = "ARG") +
+  facet_nested(gene_class ~ treatment + plot, scales = "free", space = "free") + theme_classic() +
+  theme(
+    text = element_text(size = 12, family = "Times"),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = "top",
+    legend.key.width = unit(.75, "in"))
+```
+
+A few genes were detected in low enough quantities that they are no longer visible in the filtered data set. Overall, the results do not change much, but there are changes in pairwise significance for some genes that I need to evaluate further. 
+
+# Supp Figure S3
+
+```{r}
+soilwithlod <- soildata %>%
+  left_join(lod_max_by_gene, by = c("Assay" = "Sample_Name")) 
+  
+soilwithlod$norm[soilwithlod$Value >= soilwithlod$max_lod] <- NA
+
+soilwithlod$counts[soilwithlod$Value >= soilwithlod$max_lod] <- NA
+
+levels(soilwithlod$treatment) <- list("CS" = "WCS", "CSL" = "WCSM", "CL" = "WCM")
+
+heatmap2 <- ggplot(soilwithlod, aes(as.factor(sample_day), ordered(Assay, levels = levels))) +
+  geom_tile(aes(fill = norm), colour = "white", size = 0.1) +
+  scale_fill_viridis_c(name = "ARG copies \nnormalized by 16S")  +
+  labs(x = "Sample day", y = "ARG") +
+  facet_nested(gene_class ~ treatment + plot, scales = "free", space = "free") + theme_classic() +
+  theme(
+    text = element_text(size = 12, family = "Times"),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = "top",
+    legend.key.width = unit(.75, "in")
+  ) 
+heatmap2 +
+  scale_y_discrete(
+    name = NULL,
+    labels = labels
+  ) 
+
+
+ggsave(filename = "../Figures/SupFigS3.jpeg", plot = last_plot(), device = "jpeg", units = "in", width = 7, height = 7.5, dpi = 350)
+```
+
+# Supp Figure S4
+
+This plot shows the flow rate for each sample from each plot. 
+
+If we plot MAB vs. flow, do prairie strips have an impact? 
+
+```{r}
+library(readxl)
+mabbarplot$data
+
+flow <- read_excel("~/Desktop/biomark-bioinformatics/data/WOR_Water_flow.xlsx")
+
+glimpse(flow)
+
+flow$sample_number <- as.character(flow$sample_number)
+```
+
+
+```{r}
+ggplot(flow, aes(x = as.factor(sample_number), y = `flow_g/s`, group = as.factor(plot))) +
+  geom_line(position = position_dodge(width = .3)) +
+  geom_point(aes(color = as.factor(treatment)), position = position_dodge(width = .3), size = 5) +
+  geom_text(aes(label = plot), position = position_dodge(width = .3), show.legend = F) +
+  theme_classic() +
+  theme(
+    legend.position = "top", 
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 0, vjust = 0, hjust = 0.5)) +
+    scale_color_viridis_d() +
+    labs(x = "Time after runoff start (min)", y = "Flow (mL/s)", color = "Treatment \n(points labeled with plot)") +
+    scale_x_discrete(labels = c("1" = "2.5", "2" = "7.5", "3" = "12.5", "4" = "17.5", "5" = "22.5", "6" = "27.5"))
+
+ggsave(filename = "../Figures/SupFig4.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+
+# Supp Figure S5
+
+```{r}
+SixS <- norm %>%
+  filter(Assay == "16S_Eub_338_518") 
+SixS
+
+SixS$treatment = factor(SixS$treatment, 
+                             levels = c('WCS', 'WCSM', 'WCM'))
+levels(SixS$treatment) <- list("CS"="WCS", "CSM"="WCSM", "CM"="WCM")
+SixS$sample_number <- as.factor(SixS$sample_number)
+levels(SixS$sample_number) <- list("2.5" = "1", "7.5" = "2", "12.5" = "3", "17.5" = "4", "22.5" = "5", "27.5" = "6")
+
+my_comparisons <- list( c("WCS", "WCSM"), c("WCS", "WCM"), c("WCM", "WCSM"))
+
+sig <- SixS %>%
+  filter(!rep %in% c(4,5,6)) %>%
+  droplevels()
+
+sig
+p <- ggplot(sig, aes(x=treatment, y=counts, fill = treatment)) + 
+  geom_boxplot() +
+  labs(x = "Treatment", y = "Log 10 gene 16s copies") +
+  scale_y_continuous(trans = 'log10') +
+  scale_fill_viridis_d() +
+  facet_wrap( ~ sample_number) +
+  theme_pubr() +
+  theme(
+    legend.background = element_rect(
+      fill = (alpha = 0),
+      color = 'black',
+      size = 0.1),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    legend.position = "none") 
+p  
+```
+
+```{r}
+krusk.test <- sig %>%
+  group_by(sample_number) %>%
+  kruskal_test(counts ~ treatment)
+krusk.test
+
+stat.test <- sig %>%
+  group_by(sample_number) %>%
+  dunn_test(counts ~ treatment) %>%
+  adjust_pvalue(method = "hochberg") %>%
+  mutate(y.position = rep(c(log10(100000), log10(300000), log10(1000000)), 6))
+stat.test
+p <- ggboxplot(sig, x = "treatment", y = "counts", facet.by = "sample_number") +
+  scale_y_continuous(trans = "log10")
+
+options(scipen = 5)
+
+p + 
+  stat_pvalue_manual(stat.test, hide.ns = T) +
+  theme_pubr() +
+  labs(x = "Treatment", y = "Log 10 gene 16s copies",
+       caption = get_pwc_label(stat.test)) +
+  scale_x_discrete(labels = c("CSM" = "CSL", "CM" = "CL"))
+ggsave(filename = "../Figures/SuppFiggS5.png", plot = last_plot(), device = "png", units = "in", width = 6.5, height = 7.5, dpi = 300)
+  
+```
+
+# Supp Figure S6
+
+```{r}
+df <- mabbarplot$data %>%
+  group_by(plot, time) %>%
+  mutate(SumAbund = sum(Abundance)) %>%
+  rename(sample_number = time) %>%
+  ungroup() %>%
+  left_join(flow, by = c("plot", "sample_number")) %>%
+  select(treatment.x, plot, sample_number, SumAbund, time_after_runoff_start, collection_time_sec, jare_tare_wt_g, jare_plus_runoff_wt_g, `flow_g/s`)
+
+write_excel_csv(df, file = "../Data/water_flow_with_MAB.csv")
+
+lmplot <- df %>%
+  filter(!treatment.x == "CS") %>%
+  ggplot(aes(x = `flow_g/s`, y = SumAbund, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)  +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+
+lmplot
+```
+
+```{r}
+# Two seperate lm's to calculated where they intersect
+CM <- df %>%
+  filter(!treatment.x %in% c("CS", "CSL")) %>%
+  lm(SumAbund ~ `flow_g/s`, data = .)
+summary(CM)$r.squared
+summary(CM)$adj.r.squared
+
+CSM <- df %>%
+  filter(!treatment.x %in% c("CS", "CL")) %>%
+  lm(SumAbund ~ `flow_g/s`, data = .)
+summary(CSM)$r.squared
+summary(CSM)$adj.r.squared
+
+# where do the two lines intersect? 
+cm <- rbind(coef(CM),coef(CSM)) # Coefficient matrix
+c(-solve(cbind(cm[,2],-1)) %*% cm[,1])
+
+lmplot <- df %>%
+  filter(!treatment.x == "CS") %>%
+  ggplot(aes(x = `flow_g/s`, y = SumAbund, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(x = 7.373952, y = 0.286310, color = "black") +
+  annotate("text", x = 8.1, y = 0.24, label = "7.37 (mL/s)") +
+  stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")), 
+    label.x = 3, show.legend = F) +
+  labs(x = "Flow (mL/s)", y = "Relative abundance (%)") +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  annotate("segment", x = 7.373952, xend = 7.6, y = 0.286310, yend = 0.26,
+  colour = "black") +
+  scale_color_manual(name = "Treatment", labels = c("CSL", "CL"), values = c("darkgreen", "tan4")) +
+  theme_bw() 
+
+lmplot
+ggsave(filename = "../Figures/SupFig6.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+
+# Supp Figure S7
+
+If we plot MAB vs. flow, do prairie strips have an impact?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(readxl)
+
+df <- read_csv("~/Desktop/biomark-bioinformatics/data/water_flow_with_MAB.csv")
+
+```
+
+Look at differences in sample volume, time to collect
+```{r}
+colnames(df)
+
+ggplot(df, aes(x = as.factor(sample_number), y = collection_time_sec, fill = as.factor(plot))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(~ treatment.x) +
+  ggtitle("Sample Collection time")
+ggplot(df, aes(x = as.factor(sample_number), y = jare_plus_runoff_wt_g - jare_tare_wt_g, fill = as.factor(plot))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(~ treatment.x) +
+  ggtitle("Sample Volume")
+```
+
+A simple scatter plot looking at flow vs abundance, with a lm line fitted to each treatment.
+
+```{r echo=FALSE}
+# this data is at the end of the document
+class(df$plot) 
+
+
+plot <- df %>%
+  filter(!treatment.x == "Crop + Strip") %>%
+  ggplot(aes(x = `flow_g/s`, y = Abundance, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)  +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+plot
+```
+
+It appears that up to a flow of 7.5 g/s, strips may be effective at removing MAB in runoff water when compared to if no strips are present.
+
+Calculate corrected (cor) MAB abundance by dividing MAB abundance by flow in each sample. Then calculate the treatment mean, sd, se and interquartile.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data <- df %>%
+  filter(!treatment.x == "Crop + Strip") %>%
+  mutate(cor = Abundance / `flow_g/s`) %>%# Make a plot
+  group_by(treatment.x, time_after_runoff_start) %>%
+  dplyr::summarise( 
+    n = n(),
+    mean = mean(cor),
+    sd = sd(cor)
+  ) %>%
+  mutate(se = sd/sqrt(n))  %>%
+  mutate(ic = se * qt((1-0.05)/2 + .5, n-1)) 
+```
+
+```{r echo=FALSE}
+data %>%
+  ggplot(aes(x = time_after_runoff_start, 
+             y = mean, 
+             ymin = mean - ic, 
+             ymax = mean + ic,
+             color = treatment.x,
+             group = treatment.x)) +
+  geom_point(position = position_dodge(width = 1), size = 2) +
+  geom_line(position = position_dodge(width = 1), size = 2) +
+  geom_errorbar(position = position_dodge(width = 1), width = .8) +
+  labs(y = "Mean MAB / flow", x = "Time", title = "Flow weighted", subtitle = "Divide MAB relative abundance by flow") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+```
+
+Here, despite the error bars, we have indications that when strips are present, there is less MAB in runoff water.
+
+Event mean concentration (EMC)
+
+EMC calculation
+
+For a plot we have
+
+1.  6 water samples
+
+2.  Mass (vol) of water collected at each sample
+
+3.  Time to collect each sample
+
+4.  Count of ARGs filtered out of sample
+
+The calculation
+
+Event load (EL)
+
+
+$$
+=\frac{{T1ARGConc}*{T1Vol}+{T2ARGConc}*{T2Vol}+{T3ARGConc}*{T3Vol}+{T4ARGConc}*{T4Vol}+{T5ARGConc}*{T5Vol}+{T6ARGConc}*{T6Vol}}{Event TotalVol}
+$$
+
+<!-- # ```{r} -->
+<!-- # # Load copy number from HT-qPCR runs -->
+<!-- # # If you haven't calculated copy numbers yet, -->
+<!-- # # see: \#\#\#\#\#\#\# -->
+<!-- # water_counts <- read_csv("~/Desktop/biomark-bioinformatics/data/WORWATERARGCOUNTS.csv") -->
+<!-- #  -->
+<!-- # head(water_counts) -->
+<!-- # ``` -->
+
+```{r}
+watervols <- df %>%
+  select(treatment.x, plot, sample_number, time_after_runoff_start, collection_time_sec, jare_tare_wt_g, jare_plus_runoff_wt_g, `flow_g/s`) %>%
+  mutate(sample_volume = jare_plus_runoff_wt_g - jare_tare_wt_g)
+```
+
+```{r}
+# Join the two by plot and sample_number
+# Select wanted columns and convert joining variables to factor
+
+# left side
+ls <- watervols %>%
+  group_by(plot) %>%
+  mutate(plot_volume = sum(sample_volume), plot = as.factor(plot), sample_number = as.factor(sample_number)) %>%
+  select(treatment.x, plot, sample_number, sample_volume, plot_volume, collection_time_sec, `flow_g/s`) %>%
+  ungroup()
+
+# right side
+rs <- norm %>%
+  select(plot, sample_number, Assay, counts) %>%
+  mutate(plot = as.factor(plot), sample_number = as.factor(sample_number))
+
+# joined
+df <- ls %>%
+  left_join(rs, by = c("plot", "sample_number")) 
+
+plotvolumes <- df %>%
+  select(Plot = plot, plot_volume) %>%
+  distinct()
+```
+
+```{r}
+df <- df %>% 
+  group_by(plot, Assay, sample_number) %>%
+  mutate(copies_mL = counts / sample_volume,
+         copies_sec = counts / collection_time_sec,
+         fcopies = sample_volume * copies_mL,
+         tcopies = collection_time_sec * copies_sec,
+         unitload = copies_mL * `flow_g/s` * collection_time_sec, # Unit load, sum this for load calculation for each plot
+         rep = seq_along(Assay)) %>%
+  ungroup() 
+
+```
+
+We had three technical replicates for each assay and water sample.
+
+
+Event mean treatment concentration
+
+```{r}
+mycomps <- list(c("Crop + Strip", "Crop + Strip + Manure"), c("Crop + Strip", "Crop + Manure"), c("Crop + Strip + Manure", "Crop + Manure"))
+df %>%
+  filter(Assay == "16S_Eub_338_518") %>%
+  group_by(plot, rep) %>%
+  mutate(plot_sum_mean_copies_mL = sum(fcopies),
+         plot_load_copies = plot_sum_mean_copies_mL / plot_volume) %>%
+  select(treatment.x, plot, rep, plot_load_copies) %>%
+  distinct() %>%
+  arrange(plot) %>%
+  ggboxplot(x = "treatment.x", y = "plot_load_copies") +
+  ggtitle("Event mean conc. 16S (copies/mL)") +
+  stat_compare_means(comparisons = mycomps) +
+  stat_compare_means(label.y = 3.5)
+  
+```
+
+
+```{r}
+EMC <- function(df, gene){
+  mycomps <- list(c("Crop + Strip", "Crop + Strip + Manure"), 
+                  c("Crop + Strip", "Crop + Manure"), 
+                  c("Crop + Strip + Manure", "Crop + Manure"))
+  
+  df %>%
+    filter(Assay == gene) %>%
+    group_by(plot, rep) %>%
+    mutate(plot_sum_mean_copies_mL = sum(fcopies),
+           plot_load_copies = plot_sum_mean_copies_mL / plot_volume) %>%
+    select(treatment.x, plot, rep, plot_load_copies) %>%
+    distinct() %>%
+    arrange(plot) %>%
+    ggboxplot(x = "treatment.x", y = "plot_load_copies") +
+    scale_y_continuous(trans = "log10") +
+    ggtitle(paste0("Event mean concentration for ", gene, " (copies/mL)")) +
+    labs(x="Treatment",y="gene copies/mL") +
+    stat_compare_means(comparisons = mycomps) +
+    stat_compare_means()
+}
+
+PlotLoad <- function(df, gene){
+    mycomps <- list(c("Crop + Strip", "Crop + Strip + Manure"), 
+                  c("Crop + Strip", "Crop + Manure"), 
+                  c("Crop + Strip + Manure", "Crop + Manure"))
+  
+  df %>%
+    filter(Assay == gene) %>%
+    group_by(plot, rep) %>%
+    mutate(load = sum(unitload)) %>%
+    select(treatment.x, plot, rep, load) %>%
+    distinct() %>%
+    arrange(plot) %>%
+    ggboxplot(x = "treatment.x", y = "load") +
+    ggtitle(paste0("Event load for ", gene, " (copies)")) +
+    labs(x="Treatment",y="Event gene load (copies)") +
+    stat_compare_means(comparisons = mycomps) +
+    stat_compare_means()
+    
+}
+```
+
+
+Event mean concentration
+
+```{r}
+AllGeneEMC <- unique(df$Assay) %>%
+  map( ~ EMC(df, gene = .x)) 
+
+AllGeneEMC
+```
+
+Event load
+
+For a plot, the sum of concentration * flow * time
+
+
+```{r}
+AllGeneloads <- unique(df$Assay) %>%
+  map( ~ PlotLoad(df, gene = .x)) 
+
+AllGeneloads
+```
+
+
+```{r}
+plot <- df %>%
+  filter(!treatment.x == "Crop + Strip", Assay == "tetL") %>%
+  group_by(treatment.x, sample_number) %>%
+  summarise( 
+    n = n(),
+    mean = mean(fcopies),
+    sd = sd(fcopies)
+  ) %>%
+  mutate(se = sd/sqrt(n))  %>%
+  mutate(ic = se * qt((1-0.05)/2 + .5, n-1)) %>%
+  ggplot(aes(x = sample_number, 
+             y = mean, 
+             ymin = mean - ic, 
+             ymax = mean + ic,
+             color = treatment.x,
+             group = treatment.x)) +
+  geom_point(position = position_dodge(width = .1), size = 2) +
+  geom_line(position = position_dodge(width = .1), size = 2) +
+  geom_errorbar(position = position_dodge(width = .1), width = .2) +
+  labs(y = "tetL copies", x = "Sample Number", title = "Volume normalized tetL", subtitle = "Divide tetL by volume") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+plot
+```
+
+<!-- 16S copies per mL -->
+
+<!-- ```{r} -->
+<!-- plot <- df %>% -->
+<!--   filter(!treatment.x == "Crop + Strip", Assay == "16S_Eub_338_518") %>% -->
+<!--   group_by(treatment.x, sample_number) %>% -->
+<!--   summarise(  -->
+<!--     n = n(), -->
+<!--     mean = mean(fcopies), -->
+<!--     sd = sd(fcopies) -->
+<!--   ) %>% -->
+<!--   mutate(se = sd/sqrt(n))  %>% -->
+<!--   mutate(ic = se * qt((1-0.05)/2 + .5, n-1)) %>% -->
+<!--   ggplot(aes(x = sample_number,  -->
+<!--              y = mean,  -->
+<!--              ymin = mean - ic,  -->
+<!--              ymax = mean + ic, -->
+<!--              color = treatment.x, -->
+<!--              group = treatment.x)) + -->
+<!--   geom_point(position = position_dodge(width = .1), size = 2) + -->
+<!--   geom_line(position = position_dodge(width = .1), size = 2) + -->
+<!--   geom_errorbar(position = position_dodge(width = .1), width = .2) + -->
+<!--   labs(y = "16S copies", x = "Sample Number", title = "Volume normalized 16S", subtitle = "Divide 16S by volume") + -->
+<!--   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + -->
+<!--   scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") + -->
+<!--   theme_bw() -->
+<!-- plot -->
+<!-- ``` -->
+
+<!-- Copies/mL heatmap -->
+
+<!-- ```{r} -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- df$treatment.x <- factor(df$treatment.x, levels = c("Crop + Strip", "Crop + Strip + Manure", "Crop + Manure")) -->
+
+<!-- df$copies_mL[df$copies_mL <= 7.151370e-142] <- NA -->
+
+<!-- heatmap <- df %>% -->
+<!--   filter(!Assay %in% c("intI1F165_clinical")) %>% -->
+<!--   ggplot(aes(as.factor(sample_number), Assay)) + -->
+<!--   geom_tile(aes(fill = copies_mL), colour = "white", size = 0.1) + -->
+<!--   scale_fill_viridis(name = "Gene copies per mL", option = "plasma")  + -->
+<!--   labs(x = "Sample Number", y = "Gene") + -->
+<!--   facet_nested(~ treatment.x + plot, scales = "free", space = "free") + theme_classic() + -->
+<!--   theme( -->
+<!--     legend.background = element_rect( -->
+<!--       fill = (alpha = 0), -->
+<!--       color = 'black', -->
+<!--       size = 0.1), -->
+<!--     panel.background = element_rect(color = 'black', size = 1.4), -->
+<!--     strip.text.x = element_text(size = 10, face = 'bold'), -->
+<!--     strip.background = element_rect(colour = 'black', size = 1.4), -->
+<!--     axis.text.x = element_text(angle = 90) -->
+<!--   )  -->
+
+<!-- heatmap -->
+<!-- ``` -->
+
+<!-- ![](images/WaterARGnormcountHeat.png) -->
+
+<!-- Heatmap of ARG counts normalized by 16s counts -->
+
+<!-- Relative abundance of ARGs -->
+
+<!-- DeltaCt = Ct(ARG) - Ct(16S) -->
+<!-- Relative Abundance = 2 ^ (-DeltaCt) -->
+<!-- Genes below detection limit were given a delatCt of 20, higher than any other  -->
+<!-- deltaCt -->
+
+<!-- ```{r setwd and read data, include=FALSE} -->
+<!-- df <- readRDS("data/metawithbiomark.RDS")  -->
+<!-- # Make Value column numeric -->
+<!-- df$Value <- as.numeric(df$Value) -->
+<!-- unique(df$Assay) -->
+<!-- unique(df$Sample_Name) -->
+<!-- # Rename two Assays and Sample_Names, tetG_F and sul1 NEW -->
+<!-- df$Assay <- recode(df$Assay, -->
+<!--                    "sul1 NEW" = "sul1", -->
+<!--                    "tetG_F" = "tetG") -->
+<!-- df$Sample_Name <- recode(df$Sample_Name, -->
+<!--                    "sul1 NEW" = "sul1", -->
+<!--                    "tetG_F" = "tetG") -->
+<!-- df$treatment -->
+<!-- ``` -->
+
+<!-- ```{r subset biomark} -->
+<!-- water <- df %>% -->
+<!--   filter(sample_type %in% "water")  -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- WaterCT <- water %>% -->
+<!--   select(Sample_Name, Assay, Value, treatment, plot, sample_number) %>% -->
+<!--   group_by(Sample_Name, Assay) %>% -->
+<!--   mutate(rep = seq_along(Assay)) %>% -->
+<!--   ungroup() %>% -->
+<!--   group_by(Sample_Name, rep) %>% -->
+<!--   mutate(deltaCt = Value - Value[Assay == "16S_Eub_338_518"]) # Delta CT calculation -->
+
+<!-- WaterCT$deltaCt[WaterCT$deltaCt > 35] <- 20 -->
+<!-- WaterCT$deltaCt[WaterCT$deltaCt == 0] <- 20 -->
+
+<!-- WaterCT <- WaterCT %>% -->
+<!--   group_by(Sample_Name, rep) %>% -->
+<!--   mutate(relative_abundance = 2 ^ (- deltaCt), -->
+<!--          log10relative_abundance = log10(relative_abundance + 0.0001)) %>%# relative abundance calculation -->
+<!--   ungroup() %>% -->
+<!--   filter(!Assay %in% c("16S_Eub_338_518", "intI1F165_clinical", "aac3-Via"), -->
+<!--          !Sample_Name == "Supply_Water")  -->
+
+<!-- ``` -->
+<!-- Relative abundance ARG heatmap -->
+
+
+<!-- ```{r} -->
+<!-- WaterCT <- WaterCT %>% # Add classes to ARGs -->
+<!--   mutate(gene_class = case_when(Assay %in% unique(WaterCT$Assay[grepl("^[aa]", WaterCT$Assay)]) ~ "AMG", -->
+<!--                                 Assay %in% unique(WaterCT$Assay[grepl("^[erm]", WaterCT$Assay)]) ~ "MLSB", -->
+<!--                                 Assay %in% unique(WaterCT$Assay[grepl("^[sul]", WaterCT$Assay)]) ~ "Sulfa", -->
+<!--                                 Assay %in% unique(WaterCT$Assay[grepl("tet", WaterCT$Assay)]) ~ "Tet", -->
+<!--                                 Assay %in% c("intl1", "intl2", "intl3", "IS1247", "IS6100", "tnpA2", -->
+<!--                                               "tnpA5", "tnpA6", "tnpA3", "intI1F165_clinical", "tnpA1", "int1-a-marko", "tnpA7") ~ "MGE",  -->
+<!--                                 Assay %in% c("cadC", "cmr") ~ "HM", -->
+<!--                                 Assay == c("16S_Eub_338_518") ~ "16S")) -->
+
+<!-- WaterCT$gene_class_f = factor(WaterCT$gene_class, # Order the classes -->
+<!--                                 levels = c('AMG', 'MLSB', 'Sulfa', "Tet", "MGE", "HM", "16S")) -->
+
+<!-- test <- WaterCT %>% # Order ARGs based on class -->
+<!--   arrange(gene_class)  -->
+
+<!-- levels <- dput(levels(factor(test$Assay))) # dput ftw!!! -->
+
+<!-- heatmap <- ggplot(WaterCT, aes(as.factor(sample_number), ordered(Assay, levels = levels))) + -->
+<!--   geom_tile(aes( -->
+<!--     fill = relative_abundance),  -->
+<!--     colour = "white",  -->
+<!--     size = 0.1) + -->
+<!--   labs( -->
+<!--     x = "Sample Time (min)",  -->
+<!--     y = "Gene") + -->
+<!--   scale_fill_gradient( -->
+<!--     name = "Relative Abundance", # changes legend title -->
+<!--     low = "white", -->
+<!--     high = "red", -->
+<!--     limit = c(min(WaterCT$relative_abundance), max(WaterCT$relative_abundance))) + -->
+<!--   facet_nested( -->
+<!--     gene_class_f ~ treatment + plot,  -->
+<!--                scales = "free",  -->
+<!--                space = "free") + theme_classic() + -->
+<!--   theme( -->
+<!--     legend.background = element_rect( -->
+<!--       fill = (alpha = 0), -->
+<!--       color = 'black', -->
+<!--       size = 0.1), -->
+<!--     panel.background = element_rect(color = 'black', size = 1.4), -->
+<!--     strip.text.x = element_text(size = 10, face = 'bold'), -->
+<!--     strip.background = element_rect(colour = 'black', size = 1.4) -->
+<!--   )  -->
+<!-- heatmap -->
+<!-- ``` -->
+
+<!-- tetL  -->
+
+<!-- ```{r} -->
+
+<!-- sum_stats <- WaterCT %>% -->
+<!--   group_by(treatment, Assay) %>% -->
+<!--   get_summary_stats(relative_abundance, type = "mean_se") -->
+
+<!-- sum_stats -->
+
+<!-- res.kruskal <- WaterCT %>% -->
+<!--   filter(Assay == "tetL") %>% -->
+<!--   kruskal_test(relative_abundance ~ treatment) -->
+
+<!-- pwc <- WaterCT %>% -->
+<!--   filter(Assay == "tetL") %>% -->
+<!--   dunn_test(relative_abundance ~ treatment, p.adjust.method = "hochberg", detailed = T) -->
+
+<!-- pwc -->
+
+<!-- pwc <- pwc %>% add_xy_position(x = "treatment") -->
+
+<!-- WaterCT %>% -->
+<!--   filter(Assay == "tetL") %>% -->
+<!--   ggboxplot(x = "treatment", y = "relative_abundance") + -->
+<!--   stat_pvalue_manual(pwc) + -->
+<!--   labs( -->
+<!--     subtitle = get_test_label(res.kruskal, detailed = TRUE), -->
+<!--     caption = get_pwc_label(pwc) -->
+<!--     )  -->
+
+<!-- pwc %>% -->
+<!--   select(group1, group2, p.adj, p.adj.signif) %>% -->
+<!--   mutate(P = round(p.adj, digits = 10))  -->
+<!-- ``` -->
+
+<!-- log10 transform?  -->
+<!-- ```{r} -->
+
+<!-- sum_stats <- WaterCT %>% -->
+<!--   group_by(treatment, Assay) %>% -->
+<!--   get_summary_stats(log10relative_abundance, type = "mean_se") -->
+
+<!-- sum_stats -->
+
+<!-- res.kruskal <- WaterCT %>% -->
+<!--   filter(Assay == "tetL") %>% -->
+<!--   kruskal_test(log10relative_abundance ~ treatment) -->
+
+<!-- pwc <- WaterCT %>% -->
+<!--   filter(Assay == "tetL") %>% -->
+<!--   dunn_test(log10relative_abundance ~ treatment, p.adjust.method = "hochberg", detailed = T) -->
+
+<!-- pwc -->
+
+<!-- pwc <- pwc %>% add_xy_position(x = "treatment") -->
+
+<!-- WaterCT %>% -->
+<!--   filter(Assay == "tetL") %>% -->
+<!--   ggboxplot(x = "treatment", y = "log10relative_abundance") + -->
+<!--   stat_pvalue_manual(pwc) + -->
+<!--   labs( -->
+<!--     subtitle = get_test_label(res.kruskal, detailed = TRUE), -->
+<!--     caption = get_pwc_label(pwc) -->
+<!--     )  -->
+
+<!-- pwc %>% -->
+<!--   select(group1, group2, p.adj, p.adj.signif) %>% -->
+<!--   mutate(P = round(p.adj, digits = 10))  -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- plotrelafunction <- function(data, gene){ -->
+<!--   res.kruskal <- data %>% -->
+<!--     filter(Assay == gene) %>% -->
+<!--     kruskal_test(relative_abundance ~ treatment) -->
+
+<!--   pwc <- data %>% -->
+<!--     filter(Assay == gene) %>% -->
+<!--     dunn_test(relative_abundance ~ treatment, p.adjust.method = "hochberg", detailed = T) -->
+
+<!--   pwc -->
+
+<!--   pwc <- pwc %>% add_xy_position(x = "treatment") -->
+
+<!--   plot <-  data %>% -->
+<!--     filter(Assay == gene) %>% -->
+<!--     ggboxplot(x = "treatment", y = "relative_abundance") + -->
+<!--    stat_pvalue_manual(pwc) + -->
+<!--    labs( -->
+<!--       title = paste0("Relative abundance of ", gene), -->
+<!--       subtitle = get_test_label(res.kruskal, detailed = TRUE), -->
+<!--       caption = get_pwc_label(pwc) -->
+<!--       )  -->
+
+<!-- return(plot) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- allgenerela <- unique(WaterCT$Assay) %>% -->
+<!--   map( ~ plotrelafunction(WaterCT, gene = .x))  -->
+
+<!-- allgenerela -->
+<!-- ``` -->
+
+
+
+```{r}
+water_flow_data <- read_csv("~/Desktop/biomark-bioinformatics/data/water_flow_data.csv") %>% 
+   mutate(Plot = as.factor(Plot))
+```
+
+
+We collected all runoff, save that collected for each sample. Per plot runoff totals:
+
+```{r}
+colnames(water_flow_data)
+water_flow_data <- water_flow_data %>%
+  left_join(plotvolumes, by = "Plot")
+```
+Volume applied to plot based on average reading of 4 rain gauges multiplied by plot area (3 m^2):
+
+```{r}
+ggplot(water_flow_data, aes(x = Plot, y = `WaterVolumeApplied(mL)`)) +
+  geom_bar(stat = "identity") +
+     geom_text(aes(label = `WaterVolumeApplied(mL)`), position=position_dodge(width=0.9), vjust=-0.25)
+```
+
+mass/volume of runoff collected in each plot, the sum of collected samples and runoff bucket weights   
+
+```{r}
+plotrunoff <- ggplot(water_flow_data, aes(x = Plot, y = `TotalRunoff(g)` + plot_volume)) +
+  geom_bar(stat = "identity") +
+     geom_text(aes(label = `TotalRunoff(g)` + plot_volume), position=position_dodge(width=0.9), vjust=-0.25)
+plotrunoff
+
+MAB <- read_csv("~/Desktop/biomark-bioinformatics/data/water_flow_with_MAB.csv")
+
+MABRUN <- MAB %>%
+  select(treatment.x, Plot = plot, Abundance) %>%
+  mutate(Plot = as.factor(Plot)) %>%
+  left_join(water_flow_data, by = "Plot") %>%
+  group_by(Plot) %>%
+  mutate(Abundance = mean(Abundance)) %>%
+  select(treatment.x, Plot, Abundance, `TotalRunoff(g)`, plot_volume, `WaterVolumeApplied(mL)`) %>%
+  distinct()
+
+plot <- MABRUN %>%
+  filter(!treatment.x == "Crop + Strip") %>%
+  ggplot(aes(x = plot_volume + `TotalRunoff(g)`, y = Abundance, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)  +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+plot
+
+plot <- MABRUN %>%
+  filter(!treatment.x == "Crop + Strip") %>%
+  ggplot(aes(x = ((`TotalRunoff(g)` + plot_volume) / `WaterVolumeApplied(mL)`), y = Abundance, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = loess, se = FALSE)  +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw() +
+  labs(x = "Percentage of water as runoff", y = "Relative abundance of MAB")
+plot
+
+
+```
+
+divide runoff volume by volume applied, runoff rate
+
+i.e. 9.5% of water applied to plot 4 was collected as runoff
+
+```{r}
+ggplot(water_flow_data, aes(x = Plot, y = round((`TotalRunoff(g)` + plot_volume) / `WaterVolumeApplied(mL)`, digits = 4) * 100)) +
+  geom_bar(stat = "identity") +
+     geom_text(aes(label = round((`TotalRunoff(g)` + plot_volume) / `WaterVolumeApplied(mL)`, digits = 4) * 100) , position=position_dodge(width=0.9), vjust=-0.25) +
+  labs(y = "Rate of runoff (%)")
+
+ggsave(filename = "../Figures/runoffrate.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+

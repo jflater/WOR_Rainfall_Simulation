@@ -1,4 +1,0 @@
-"0","phydf %>%"
-"0","  group_by(Phylum) %>%"
-"0","  summarise(Mean = mean(Abundance), StdDev = sd(Abundance)) %>%"
-"0","  arrange(-Mean)"

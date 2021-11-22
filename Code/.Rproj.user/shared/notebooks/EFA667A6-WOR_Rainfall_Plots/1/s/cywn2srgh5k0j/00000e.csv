@@ -1,5 +1,0 @@
-"0","p <- mergedsoil %>%"
-"0","  transform_sample_counts(function(x) x / sum(x)) %>%"
-"0","  subset_taxa(ASV_Association == ""MAB"")"
-"0","plot <- phylogeny_profile(p, relative_abundance = F, classification = ""Phylum"")"
-"0","plot"

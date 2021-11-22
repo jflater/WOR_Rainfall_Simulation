@@ -1,7 +1,0 @@
-"0",""
-"0","stat.test <- sig %>%"
-"0","  group_by(sample_number) %>%"
-"0","  dunn_test(counts ~ treatment) %>%"
-"0","  adjust_pvalue(method = ""hochberg"") %>%"
-"0","  mutate(y.position = rep(c(log10(100000), log10(300000), log10(1000000)), 6))"
-"0","stat.test"

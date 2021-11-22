@@ -1,2 +1,0 @@
-"0",""
-"0","saveRDS(heatmap2$data, file = ""../Data/hetmapdata.RDS"")"
