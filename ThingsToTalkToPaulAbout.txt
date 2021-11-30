@@ -1,0 +1,2 @@
+1 Github pw, can't push at the moment
+2 Render quarto on 16S moves to preview of Manuscriptwalkthrough before showing quarto doc
