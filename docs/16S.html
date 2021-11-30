@@ -156,6 +156,9 @@
       <li class="sidebar-item">
   <a href="./ManuscriptWalkthrough.html" class="">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</a>
 </li>
+      <li class="sidebar-item">
+  <a href="./16S.html" class="active">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</a>
+</li>
   </ul>
   </div>
 </nav>
@@ -178,18 +181,18 @@
 </header>
 
 <p>Introduction</p>
-<p>This code was used to generate figures for a publication titled: <em>Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</em></p>
+<p>This code was used to generate figures for a publication titled: <em>Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Litter</em></p>
 <p>The manuscript is available here:</p>
-<p>The project was designed to evaluate if the conservation practice of planting strips of prairie grasses within agricultural fields might attenuate the transport of manure associated genes and bacteria.</p>
-<p>Poultry manure was applied to small plots appended with prairie strips and rainfall was simulated on the manure applied ground. Runoff water samples were collected after passing through the prairie strip and soil samples were collected before and after the rainfall simulation. In both soil and water samples we looked for and tracked the presence and abundance of manure associated bacteria and genes.</p>
+<p>The project was designed to evaluate if the conservation practice of planting strips of prairie grasses within agricultural fields might attenuate the transport of Litter associated genes and bacteria.</p>
+<p>Poultry Litter was applied to small plots appended with prairie strips and rainfall was simulated on the Litter applied ground. Runoff water samples were collected after passing through the prairie strip and soil samples were collected before and after the rainfall simulation. In both soil and water samples we looked for and tracked the presence and abundance of Litter associated bacteria and genes.</p>
 <p>Figure 1</p>
-<p>Figure was is a taxonomic profile of the bacteria present in the poultry manure that was used as a fertilizer. Manure was applied to six of nine plots, two plots received manure each day of a rainfall simulation. Rainfall simulations were performed on the nine plots over three days, one day each for a block of plots. Each block contained one plot from each treatment. The treatments were:</p>
+<p>Figure was is a taxonomic profile of the bacteria present in the poultry Litter that was used as a fertilizer. Litter was applied to six of nine plots, two plots received Litter each day of a rainfall simulation. Rainfall simulations were performed on the nine plots over three days, one day each for a block of plots. Each block contained one plot from each treatment. The treatments were:</p>
 <p><strong>Crop + Strip (CS)</strong></p>
-<p><strong>Crop + Strip + Manure (CSM)</strong></p>
-<p><strong>Crop + Manure (CM)</strong></p>
-<p>The manure applied to each plot came from a single ~ 60 lbs batch of manure. When manure was applied to each plot, a sample of manure was taken to be analyzed for bacteria and antibiotic resistance genes. To track manure associated bacteria, we must first characterize the bacteria present. Here we have six manure samples and a bar plot representing the relative abundance of bacterial phyla in each sample. This data was generated using NGS sequencing of the 16S gene and analyzed using DADA2 to generate a count of the different taxa present in the various samples from the rainfall simulation.</p>
+<p><strong>Crop + Strip + Litter (CSL)</strong></p>
+<p><strong>Crop + Litter (CL)</strong></p>
+<p>The Litter applied to each plot came from a single ~ 60 lbs batch of Litter. When Litter was applied to each plot, a sample of Litter was taken to be analyzed for bacteria and antibiotic resistance genes. To track Litter associated bacteria, we must first characterize the bacteria present. Here we have six Litter samples and a bar plot representing the relative abundance of bacterial phyla in each sample. This data was generated using NGS sequencing of the 16S gene and analyzed using DADA2 to generate a count of the different taxa present in the various samples from the rainfall simulation.</p>
 <p>16S Figures</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/data import_cc9b1a2a04e10cb8880dfd02f7811cf0">
 <div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Worle data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>worle <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"Data/Worle_curated.RDS"</span>) </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -204,7 +207,7 @@
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_table</span>(worle) <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Tax.Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, visualize differences in communities by plotting PCoA ordination of the Bray-Curtis dissimilarity</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-2_6f0aa816fbfb1159171cf0bec86287c9">
 <div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(<span class="fu">sample_data</span>(worle))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code> [1] "unique_id"        "experiment"       "matrix"           "treatment"       
@@ -226,12 +229,12 @@ will replace the existing scale.</code></pre>
 </div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/PCoA.jpeg"</span>, <span class="at">plot =</span> pcoa, <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">width =</span> <span class="fl">7.0</span>, <span class="at">height =</span> <span class="fl">6.0</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/subset to manure_7c41e68f9cea8cf7a8194bcf227c1fb7">
 <div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>worle.manure <span class="ot">&lt;-</span> <span class="fu">subset_samples</span>(worle, matrix <span class="sc">==</span> <span class="st">"manure"</span>) <span class="sc">%&gt;%</span> <span class="co"># subset to manure</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_taxa</span>(<span class="cf">function</span>(x) <span class="fu">sum</span>(x) <span class="sc">&gt;=</span> <span class="dv">1</span>, T)  <span class="co"># Remove taxa observed less than once in these samples</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As we make plots of taxa, it’s easier to understand if consistent colors are used for the various phyla. We can assign a color to each of these phyla then manually color plots based on this.</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/phyla colors_358c248d7473549204a2bb548cffa356">
 <div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">010101</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a list of unique phyla</span></span>
@@ -249,7 +252,7 @@ will replace the existing scale.</code></pre>
 </div>
 <section id="figure-1" class="level1">
 <h1>Figure 1</h1>
-<p>Let’s calculate the relative abundance of each phyla in the manure and generate summary statistics (mean, standard error, and interquartile range) ::: {.cell}</p>
+<p>Let’s calculate the relative abundance of each phyla in the manure and generate summary statistics (mean, standard error, and interquartile range) ::: {.cell hash=“16S_cache/html/figure 1 plots_d22a9f57d2462796c1bf424329805e86”}</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>global_size <span class="ot">=</span> <span class="dv">12</span> <span class="co"># Font size</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>phydf <span class="ot">&lt;-</span> worle.manure <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_glom</span>(<span class="at">taxrank =</span> <span class="st">"Phylum"</span>) <span class="sc">%&gt;%</span></span>
@@ -313,13 +316,13 @@ will replace the existing scale.</code></pre>
 </div>
 <p>:::</p>
 <p>We can see that the manure is mostly represented by five phyla, Firmicutes, Proteobacteria, Bacteroidetes, Actinobacetria, and Deinococcus-Thermus.</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/fig 1 save_23de30cfaa4b732a41bdfa3f2a1046af">
 <div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use ggsave to save plot. I chose 6.5" wide because most word docs are 8.5" with 2 x 1" margins. Keep the height below 9.5" to save room for a caption. When you insert into your document, change the size to 6.5" wide to ensure that the plot looks visually the same. </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/Fig1.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">width =</span> <span class="fl">7.0</span>, <span class="at">height =</span> <span class="fl">6.0</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The specific abundances of phyla are:</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-4_5179bd089c435619ef6c84a53f32ba47">
 <div class="sourceCode" id="cb14"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>phydf <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Phylum) <span class="sc">%&gt;%</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Abundance), <span class="at">StdDev =</span> <span class="fu">sd</span>(Abundance), <span class="at">min =</span> <span class="fu">min</span>(Abundance), <span class="at">max =</span> <span class="fu">max</span>(Abundance)) <span class="sc">%&gt;%</span></span>
@@ -355,7 +358,7 @@ will replace the existing scale.</code></pre>
 <h1>Supp Figure S2</h1>
 <p>Abundance of manure associated taxa</p>
 <p>Now let’s look at the number of unique taxa in the various samples.</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-6_35af4bc745bfa3c9cfb4b2ddea06317c">
 <div class="sourceCode" id="cb16"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># strip subset, all strip soil from baseline samples in addition to no_manure_strip treatment, note the | operator </span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>worle.strip <span class="ot">&lt;-</span> <span class="fu">subset_samples</span>(worle, matrix <span class="sc">==</span> <span class="st">"soil"</span> <span class="sc">&amp;</span> sample_day <span class="sc">==</span> <span class="st">"Baseline"</span> <span class="sc">&amp;</span> soil_type <span class="sc">==</span> <span class="st">"strip"</span> <span class="sc">|</span> </span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                matrix <span class="sc">==</span> <span class="st">"soil"</span> <span class="sc">&amp;</span> treatment <span class="sc">==</span> <span class="st">"no_manure_strip"</span> <span class="sc">&amp;</span> soil_type <span class="sc">==</span> <span class="st">"strip"</span>) <span class="sc">%&gt;%</span></span>
@@ -375,7 +378,7 @@ will replace the existing scale.</code></pre>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>worle.water <span class="ot">&lt;-</span> <span class="fu">subset_samples</span>(worle, matrix <span class="sc">==</span> <span class="st">"water"</span> <span class="sc">&amp;</span> unique_id <span class="sc">!=</span> <span class="st">"Comp-from-P8-7-10-26-17"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_taxa</span>(<span class="cf">function</span>(x) <span class="fu">sum</span>(x) <span class="sc">&gt;=</span> <span class="dv">1</span>, T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-8_fbc50b8fa3a88c314b57f7cf2b87e97f">
 <div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a list of ASVs associated with each type of soil and manure</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>worle_manure_asvs <span class="ot">&lt;-</span> <span class="fu">taxa_names</span>(worle.manure)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>worle_crop_soil_asvs <span class="ot">&lt;-</span> <span class="fu">taxa_names</span>(worle.crop)</span>
@@ -395,7 +398,7 @@ will replace the existing scale.</code></pre>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>worle_border_persistors <span class="ot">&lt;-</span> <span class="fu">attr</span>(worle_vvv_diag, <span class="st">"intersections"</span>)<span class="sc">$</span>Border_ASVs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We have 1017 “MAB” taxa</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-10_a377fa27d480152f48cff7842c185dc6">
 <div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Sample_Type <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Manure"</span>, <span class="st">"Crop"</span>, <span class="st">"Strip"</span>, <span class="st">"Border"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Number_of_taxa <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">ntaxa</span>(worle.manure), <span class="fu">ntaxa</span>(worle.crop), <span class="fu">ntaxa</span>(worle.strip), <span class="fu">ntaxa</span>(worle.border))</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>Taxa_unique_to <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">length</span>(worle_manure_persitors), <span class="fu">length</span>(worle_crop_persistors), <span class="fu">length</span>(worle_strip_persistors), <span class="fu">length</span>(worle_border_persistors))</span>
@@ -411,7 +414,7 @@ will replace the existing scale.</code></pre>
 </div>
 </div>
 <p>Make a taxonomy table of the ASVs unique to manure</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-12_9ac74532643945ea51ab37b4849ad748">
 <div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>MAB <span class="ot">&lt;-</span> <span class="fu">tax_table</span>(worle.manure) <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"ASV"</span>) <span class="sc">%&gt;%</span></span>
@@ -436,7 +439,7 @@ will replace the existing scale.</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(MAB, <span class="at">file =</span> <span class="st">"Tables/MAB.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">col.names =</span> T,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">qmethod =</span> <span class="st">"double"</span>, <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-14_7f43de9f06031d3a9b464e606cf0c7f6">
 <div class="sourceCode" id="cb24"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggvenn</span>(<span class="fu">list</span>(<span class="st">"Manure"</span> <span class="ot">=</span> worle_manure_asvs, <span class="st">"Crop"</span> <span class="ot">=</span> worle_crop_soil_asvs, <span class="st">"Strip"</span> <span class="ot">=</span> worle_strip_soil_asvs, <span class="st">"Border"</span> <span class="ot">=</span> worle_border_asvs), <span class="at">set_name_size =</span> <span class="dv">4</span>, <span class="at">show_percentage =</span> F) <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stderr">
 <pre><code>Scale for 'fill' is already present. Adding another scale for 'fill', which
@@ -451,7 +454,7 @@ will replace the existing scale.</code></pre>
 </div>
 </div>
 <p>We will assign taxa to two groups, soils associated and manure associated bacteria: “SAB” and “MAB”</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-16_c11a781db88cb72b268aeeec2bd3767b">
 <div class="sourceCode" id="cb28"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tax_association <span class="ot">&lt;-</span> <span class="fu">tax_table</span>(worle.water) <span class="sc">%&gt;%</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"ASV"</span>) <span class="sc">%&gt;%</span></span>
@@ -464,7 +467,7 @@ will replace the existing scale.</code></pre>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_table</span>(worle.water) <span class="ot">&lt;-</span> tax_association</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now subset water samples to just “MAB”.</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-18_f340dcc3c6b2724c516b70e5942a08d2">
 <div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Due to sequencing depth, we have a few MAB detected in CS plots, let's note them and remove them for "clean" plot. </span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ASVsinCS <span class="ot">&lt;-</span> <span class="fu">subset_samples</span>(worle.water, treatment <span class="sc">==</span> <span class="st">"no_manure_strip"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset_taxa</span>(ASV_Association <span class="sc">==</span> <span class="st">"MAB"</span>) <span class="sc">%&gt;%</span> </span>
@@ -494,7 +497,7 @@ refseq()      DNAStringSet:      [ 489 reference sequences ]</code></pre>
 </section>
 <section id="figure-2" class="level1">
 <h1>Figure 2</h1>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-20_cc8848e931d155b22347fe5f85759f85">
 <div class="sourceCode" id="cb31"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">phylogeny_profile</span>(sp, <span class="at">classification =</span> <span class="st">'Phylum'</span>, <span class="at">treatment =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>), <span class="at">merge =</span> <span class="cn">TRUE</span>, <span class="at">relative_abundance =</span> F) <span class="sc">+</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(. <span class="sc">~</span> treatment <span class="sc">+</span> plot, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
@@ -545,14 +548,14 @@ replace the existing scale.</code></pre>
 </div>
 </div>
 <p>The relative abundance of phyla that represent the “MAB” taxa detected in runoff water.</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-22_0b58d75a6a0d32cbf40396e4d29c01e9">
 <div class="sourceCode" id="cb34"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/Fig2.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="figure-3" class="level1">
 <h1>Figure 3</h1>
 <p>Only plot 8 most abundant phyla to keep plot cleaner</p>
-<div class="cell">
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-24_95b5e41e579c45a2e2b8053b7c978d4e">
 <div class="sourceCode" id="cb35"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>summary <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>treatment <span class="sc">==</span> <span class="st">"CS"</span>) <span class="sc">%&gt;%</span> <span class="co"># Remove no manure treatment</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Phylum, </span>
@@ -599,7 +602,7 @@ replace the existing scale.</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/Fig3.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>LAB treatment mean ::: {.cell}</p>
+<p>LAB treatment mean ::: {.cell hash=“16S_cache/html/unnamed-chunk-26_4e99398f41044007c3ffac3ad48ac524”}</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment, plot, time) <span class="sc">%&gt;%</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>

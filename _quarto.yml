@@ -2,9 +2,11 @@ project:
   title: "WOR Rainfall Simulation"
   output-dir: docs
   type: "site"
-execute: 
-  freeze: auto # re-render only when source changes
   
+execute: 
+  freeze: true # re-render only when source changes
+  cache: true
+   
 site:
 
   sidebar:
@@ -12,6 +14,7 @@ site:
     collapese-level: 2
     contents: 
       - ManuscriptWalkthrough.Rmd
+      - 16S.qmd
       
   navbar: 
     background: primary
