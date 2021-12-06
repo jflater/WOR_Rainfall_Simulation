@@ -1,0 +1,293 @@
+---
+title: "Water Flow"
+author: "Jared Flater"
+date: "2/15/2021"
+---
+
+
+# Supp Figure S4
+
+This plot shows the flow rate for each sample from each plot. 
+
+If we plot MAB vs. flow, do prairie strips have an impact? 
+```{r}
+library(readxl)
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
+```
+
+```{r}
+mabbarplot <- readRDS(file = "Data/mabbarplot.RDS")
+
+
+
+mabbarplot$data
+
+flow <- read_excel("Data/WOR_Water_flow.xlsx")
+
+glimpse(flow)
+
+flow$sample_number <- as.character(flow$sample_number)
+```
+
+
+```{r}
+ggplot(flow, aes(x = as.factor(sample_number), y = `flow_g/s`, group = as.factor(plot))) +
+  geom_line(position = position_dodge(width = .3)) +
+  geom_point(aes(color = as.factor(treatment)), position = position_dodge(width = .3), size = 5) +
+  geom_text(aes(label = plot), position = position_dodge(width = .3), show.legend = F) +
+  theme_classic() +
+  theme(
+    legend.position = "top", 
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    axis.text.x = element_text(angle = 0, vjust = 0, hjust = 0.5)) +
+    scale_color_viridis_d() +
+    labs(x = "Time after runoff start (min)", y = "Flow (mL/s)", color = "Treatment \n(points labeled with plot)") +
+    scale_x_discrete(labels = c("1" = "2.5", "2" = "7.5", "3" = "12.5", "4" = "17.5", "5" = "22.5", "6" = "27.5"))
+
+ggsave(filename = "Figures/SupFig4.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+
+# Supp Figure S5
+
+```{r}
+norm <- readRDS(file = "Data/norm.RDS") # Load norm data from ARGs.qmd
+
+SixS <- norm %>%
+  filter(Assay == "16S_Eub_338_518") 
+SixS
+
+SixS$treatment = factor(SixS$treatment, 
+                             levels = c('WCS', 'WCSM', 'WCM'))
+levels(SixS$treatment) <- list("CS"="WCS", "CSM"="WCSM", "CM"="WCM")
+SixS$sample_number <- as.factor(SixS$sample_number)
+levels(SixS$sample_number) <- list("2.5" = "1", "7.5" = "2", "12.5" = "3", "17.5" = "4", "22.5" = "5", "27.5" = "6")
+
+my_comparisons <- list( c("WCS", "WCSM"), c("WCS", "WCM"), c("WCM", "WCSM"))
+
+sig <- SixS %>%
+  filter(!rep %in% c(4,5,6)) %>%
+  droplevels()
+
+sig
+p <- ggplot(sig, aes(x=treatment, y=counts, fill = treatment)) + 
+  geom_boxplot() +
+  labs(x = "Treatment", y = "Log 10 gene 16s copies") +
+  scale_y_continuous(trans = 'log10') +
+  scale_fill_viridis_d() +
+  facet_wrap( ~ sample_number) +
+  theme_pubr() +
+  theme(
+    legend.background = element_rect(
+      fill = (alpha = 0),
+      color = 'black',
+      size = 0.1),
+    panel.background = element_rect(color = 'black', size = 1.4),
+    strip.text.x = element_text(size = 10, face = 'bold'),
+    strip.background = element_rect(colour = 'black', size = 1.4),
+    legend.position = "none") 
+p  
+```
+
+```{r}
+krusk.test <- sig %>%
+  group_by(sample_number) %>%
+  kruskal_test(counts ~ treatment)
+krusk.test
+
+stat.test <- sig %>%
+  group_by(sample_number) %>%
+  dunn_test(counts ~ treatment) %>%
+  adjust_pvalue(method = "hochberg") %>%
+  mutate(y.position = rep(c(log10(100000), log10(300000), log10(1000000)), 6))
+stat.test
+p <- ggboxplot(sig, x = "treatment", y = "counts", facet.by = "sample_number") +
+  scale_y_continuous(trans = "log10")
+
+options(scipen = 5)
+
+p + 
+  stat_pvalue_manual(stat.test, hide.ns = T) +
+  theme_pubr() +
+  labs(x = "Treatment", y = "Log 10 gene 16s copies",
+       caption = get_pwc_label(stat.test)) +
+  scale_x_discrete(labels = c("CSM" = "CSL", "CM" = "CL"))
+ggsave(filename = "Figures/SuppFiggS5.png", plot = last_plot(), device = "png", units = "in", width = 6.5, height = 7.5, dpi = 300)
+  
+```
+
+# Supp Figure S6
+
+```{r}
+df <- mabbarplot$data %>%
+  group_by(plot, time) %>%
+  mutate(SumAbund = sum(Abundance)) %>%
+  rename(sample_number = time) %>%
+  ungroup() %>%
+  left_join(flow, by = c("plot", "sample_number")) %>%
+  select(treatment.x, plot, sample_number, SumAbund, time_after_runoff_start, collection_time_sec, jare_tare_wt_g, jare_plus_runoff_wt_g, `flow_g/s`)
+
+write_excel_csv(df, file = "Data/water_flow_with_MAB.csv")
+
+lmplot <- df %>%
+  filter(!treatment.x == "CS") %>%
+  ggplot(aes(x = `flow_g/s`, y = SumAbund, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)  +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+
+lmplot
+```
+
+```{r}
+# Two seperate lm's to calculated where they intersect
+CM <- df %>%
+  filter(!treatment.x %in% c("CS", "CSL")) %>%
+  lm(SumAbund ~ `flow_g/s`, data = .)
+summary(CM)$r.squared
+summary(CM)$adj.r.squared
+
+CSM <- df %>%
+  filter(!treatment.x %in% c("CS", "CL")) %>%
+  lm(SumAbund ~ `flow_g/s`, data = .)
+summary(CSM)$r.squared
+summary(CSM)$adj.r.squared
+
+# where do the two lines intersect? 
+cm <- rbind(coef(CM),coef(CSM)) # Coefficient matrix
+c(-solve(cbind(cm[,2],-1)) %*% cm[,1])
+
+lmplot <- df %>%
+  filter(!treatment.x == "CS") %>%
+  ggplot(aes(x = `flow_g/s`, y = SumAbund, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(x = 7.373952, y = 0.286310, color = "black") +
+  annotate("text", x = 8.1, y = 0.24, label = "7.37 (mL/s)") +
+  stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")), 
+    label.x = 3, show.legend = F) +
+  labs(x = "Flow (mL/s)", y = "Relative abundance (%)") +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  annotate("segment", x = 7.373952, xend = 7.6, y = 0.286310, yend = 0.26,
+  colour = "black") +
+  scale_color_manual(name = "Treatment", labels = c("CSL", "CL"), values = c("darkgreen", "tan4")) +
+  theme_bw() 
+
+lmplot
+ggsave(filename = "Figures/SupFig6.png", plot = last_plot(), device = "png", width = 6.5, height = 7.5, units = "in", dpi = 350)
+```
+
+# Supp Figure S7
+
+If we plot MAB vs. flow, do prairie strips have an impact?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(readr)
+
+df <- read_csv("Data/water_flow_with_MAB.csv")
+
+```
+
+Look at differences in sample volume, time to collect
+```{r}
+colnames(df)
+
+ggplot(df, aes(x = as.factor(sample_number), y = collection_time_sec, fill = as.factor(plot))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(~ treatment.x) +
+  ggtitle("Sample Collection time")
+ggplot(df, aes(x = as.factor(sample_number), y = jare_plus_runoff_wt_g - jare_tare_wt_g, fill = as.factor(plot))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(~ treatment.x) +
+  ggtitle("Sample Volume")
+```
+
+A simple scatter plot looking at flow vs abundance, with a lm line fitted to each treatment.
+
+```{r echo=FALSE}
+# this data is at the end of the document
+class(df$plot) 
+
+
+plot <- df %>%
+  filter(!treatment.x == "CS") %>%
+  ggplot(aes(x = `flow_g/s`, y = SumAbund, color = treatment.x)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)  +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+plot
+```
+
+It appears that up to a flow of 7.5 g/s, strips may be effective at removing MAB in runoff water when compared to if no strips are present.
+
+Calculate corrected (cor) MAB abundance by dividing MAB abundance by flow in each sample. Then calculate the treatment mean, sd, se and interquartile.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data <- df %>%
+  filter(!treatment.x == "CS") %>%
+  mutate(cor = SumAbund / `flow_g/s`) %>%# Make a plot
+  group_by(treatment.x, time_after_runoff_start) %>%
+  dplyr::summarise( 
+    n = n(),
+    mean = mean(cor),
+    sd = sd(cor)
+  ) %>%
+  mutate(se = sd/sqrt(n))  %>%
+  mutate(ic = se * qt((1-0.05)/2 + .5, n-1)) 
+```
+
+```{r echo=FALSE}
+data %>%
+  ggplot(aes(x = time_after_runoff_start, 
+             y = mean, 
+             ymin = mean - ic, 
+             ymax = mean + ic,
+             color = treatment.x,
+             group = treatment.x)) +
+  geom_point(position = position_dodge(width = 1), size = 2) +
+  geom_line(position = position_dodge(width = 1), size = 2) +
+  geom_errorbar(position = position_dodge(width = 1), width = .8) +
+  labs(y = "Mean MAB / flow", x = "Time", title = "Flow weighted", subtitle = "Divide MAB relative abundance by flow") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_color_manual(values = c("darkgreen", "tan4"), name = "Treatment") +
+  theme_bw()
+```
+
+Here, despite the error bars, we have indications that when strips are present, there is less MAB in runoff water.
+
+Event mean concentration (EMC)
+
+EMC calculation
+
+For a plot we have
+
+1.  6 water samples
+
+2.  Mass (vol) of water collected at each sample
+
+3.  Time to collect each sample
+
+4.  Count of ARGs filtered out of sample
+
+The calculation
+
+Event load (EL)
+
+
+$$
+=\frac{{T1ARGConc}*{T1Vol}+{T2ARGConc}*{T2Vol}+{T3ARGConc}*{T3Vol}+{T4ARGConc}*{T4Vol}+{T5ARGConc}*{T5Vol}+{T6ARGConc}*{T6Vol}}{Event TotalVol}
+$$
+
+```{r}
+ # Load copy number from HT-qPCR runs
+ # If you haven't calculated copy numbers yet,
+ # see: \#\#\#\#\#\#\#
+ water_counts <- read_csv("Data/WORWATERARGCOUNTS.csv")
+
+ head(water_counts)
+```

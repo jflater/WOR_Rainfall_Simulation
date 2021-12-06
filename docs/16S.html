@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head>
   <meta charset="utf-8">
-  <meta name="generator" content="quarto-0.2.289">
+  <meta name="generator" content="quarto-0.2.323">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="author" content="Jared Flater">
-  <title>Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</title>
+  <title>Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Litter - 16S</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -123,7 +123,7 @@
     <nav class="navbar navbar-expand-lg navbar-light ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Quarto practice site</span>
+    <span class="navbar-title">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Litter</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -140,7 +140,7 @@
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</h1>
+      <h1 class="quarto-secondary-nav-title">16S</h1>
       <button type="button" class="quarto-btn-toggle btn">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -154,16 +154,20 @@
   <div class="sidebar-menu-container"> 
   <ul class="list-unstyled mt-1">
       <li class="sidebar-item">
-  <a href="./ManuscriptWalkthrough.html" class="">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</a>
+  <a href="./16S.html" class="active">16S</a>
 </li>
       <li class="sidebar-item">
-  <a href="./16S.html" class="active">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</a>
+  <a href="./ARGs.html" class="">ARGs</a>
+</li>
+      <li class="sidebar-item">
+  <a href="./WaterFlow.html" class="">Water Flow</a>
 </li>
   </ul>
   </div>
 </nav>
-<!-- toc -->
-    <nav id="TOC" role="doc-toc" class="sidebar sidebar-toc">
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+      <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">On this page</h2>
 <ul>
 <li><a href="#figure-1" class="nav-link active" data-scroll-target="#figure-1">Figure 1</a></li>
@@ -172,10 +176,11 @@
 <li><a href="#figure-3" class="nav-link" data-scroll-target="#figure-3">Figure 3</a></li>
 </ul>
 </nav>
+    </div>
 <!-- main -->
 <main class="content">
 <header id="title-block-header">
-<h1 class="title d-none d-lg-block display-7">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure</h1>
+<h1 class="title d-none d-lg-block display-7">16S</h1>
 <p class="author">Jared Flater</p>
 <p class="date">2/15/2021</p>
 </header>
@@ -252,7 +257,8 @@ will replace the existing scale.</code></pre>
 </div>
 <section id="figure-1" class="level1">
 <h1>Figure 1</h1>
-<p>Let’s calculate the relative abundance of each phyla in the manure and generate summary statistics (mean, standard error, and interquartile range) ::: {.cell hash=“16S_cache/html/figure 1 plots_d22a9f57d2462796c1bf424329805e86”}</p>
+<p>Let’s calculate the relative abundance of each phyla in the manure and generate summary statistics (mean, standard error, and interquartile range)</p>
+<div class="cell" data-hash="16S_cache/html/figure 1 plots_d22a9f57d2462796c1bf424329805e86">
 <div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>global_size <span class="ot">=</span> <span class="dv">12</span> <span class="co"># Font size</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>phydf <span class="ot">&lt;-</span> worle.manure <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_glom</span>(<span class="at">taxrank =</span> <span class="st">"Phylum"</span>) <span class="sc">%&gt;%</span></span>
@@ -314,7 +320,7 @@ will replace the existing scale.</code></pre>
 <div class="cell-output-display">
 <p><img src="16S_files/figure-html/figure%201%20plots-3.png" class="img-fluid" width="672"></p>
 </div>
-<p>:::</p>
+</div>
 <p>We can see that the manure is mostly represented by five phyla, Firmicutes, Proteobacteria, Bacteroidetes, Actinobacetria, and Deinococcus-Thermus.</p>
 <div class="cell" data-hash="16S_cache/html/fig 1 save_23de30cfaa4b732a41bdfa3f2a1046af">
 <div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use ggsave to save plot. I chose 6.5" wide because most word docs are 8.5" with 2 x 1" margins. Keep the height below 9.5" to save room for a caption. When you insert into your document, change the size to 6.5" wide to ensure that the plot looks visually the same. </span></span>
@@ -602,7 +608,8 @@ replace the existing scale.</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/Fig3.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>LAB treatment mean ::: {.cell hash=“16S_cache/html/unnamed-chunk-26_4e99398f41044007c3ffac3ad48ac524”}</p>
+<p>LAB treatment mean</p>
+<div class="cell" data-hash="16S_cache/html/unnamed-chunk-26_4e99398f41044007c3ffac3ad48ac524">
 <div class="sourceCode" id="cb39"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment, plot, time) <span class="sc">%&gt;%</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -634,10 +641,11 @@ replace the existing scale.</code></pre>
 8     8    0.100  
 9     9    0.312  </code></pre>
 </div>
-<p>:::</p>
+</div>
 
 
 </section>
+</main> <!-- /main -->
 <script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
@@ -714,7 +722,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-</main> <!-- /main -->
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
   </div>

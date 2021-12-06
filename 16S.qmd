@@ -1,5 +1,5 @@
 ---
-title: "Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Manure"
+title: "16S"
 author: "Jared Flater"
 date: "2/15/2021"
 ---
@@ -97,6 +97,7 @@ colors <- sequential_hcl(n_distinct(phylalist), palette = "viridis") %>%
 # Figure 1
 
 Let's calculate the relative abundance of each phyla in the manure and generate summary statistics (mean, standard error, and interquartile range)
+
 ```{r figure 1 plots}
 global_size = 12 # Font size
 phydf <- worle.manure %>%
@@ -285,7 +286,9 @@ sp <- cleanwater %>%
   subset_taxa(ASV_Association == "MAB")
 sp
 ```
+
 # Figure 2
+
 ```{r}
 p <- phylogeny_profile(sp, classification = 'Phylum', treatment = c("treatment"), merge = TRUE, relative_abundance = F) +
   facet_nested(. ~ treatment + plot, scales = "free", space = "free") +
@@ -329,6 +332,8 @@ mabbarplot <- ggplot(data = df, aes(x = time, y = Abundance, fill = Phylum)) +
   guides(fill = guide_legend(nrow = 4))
 
 mabbarplot
+
+saveRDS(mabbarplot, file = "Data/mabbarplot.RDS")
 ```
 
 The relative abundance of phyla that represent the "MAB" taxa detected in runoff water.
@@ -386,6 +391,7 @@ ggsave(filename = "Figures/Fig3.jpeg", plot = last_plot(), device = "jpeg", widt
 ```
 
 LAB treatment mean
+
 ```{r}
 df %>%
   group_by(treatment, plot, time) %>%

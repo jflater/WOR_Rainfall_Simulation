@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.2.323">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Jared Flater">
+  <title>Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Litter - ARGs</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="./">
+  <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="site_libs/quarto-search/fuse.min.js"></script>
+  <script src="site_libs/quarto-search/quarto-search.js"></script>
+  <script src="site_libs/quarto-html/quarto.js"></script>
+  <script src="site_libs/quarto-html/popper.min.js"></script>
+  <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="site_libs/quarto-html/anchor.min.js"></script>
+  <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "navbar",
+    "copy-button": false,
+    "collapse-after": 2,
+    "panel-placement": "end",
+    "type": "overlay",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <link rel="stylesheet" href="styles/styles.scss">
+</head>
+<body class="docked">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Litter</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="http://germslab.org">GERMS Lab</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">ARGs</h1>
+      <button type="button" class="quarto-btn-toggle btn">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <div class="sidebar-menu-container"> 
+  <ul class="list-unstyled mt-1">
+      <li class="sidebar-item">
+  <a href="./16S.html" class="">16S</a>
+</li>
+      <li class="sidebar-item">
+  <a href="./ARGs.html" class="active">ARGs</a>
+</li>
+      <li class="sidebar-item">
+  <a href="./WaterFlow.html" class="">Water Flow</a>
+</li>
+  </ul>
+  </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+      <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">On this page</h2>
+<ul>
+<li><a href="#figure-4" class="nav-link active" data-scroll-target="#figure-4">Figure 4</a></li>
+<li><a href="#supp-figure-s3" class="nav-link" data-scroll-target="#supp-figure-s3">Supp Figure S3</a></li>
+</ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content">
+<header id="title-block-header">
+<h1 class="title d-none d-lg-block display-7">ARGs</h1>
+<p class="author">Jared Flater</p>
+<p class="date">2/15/2021</p>
+</header>
+
+<p>ARG Figures</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-2_b63a8947b2e973dd9b310046f99ad16f">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggh4x)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-4_d55f4e06bd159a14b96f0de16edda4b1">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"Data/metawithbiomark.RDS"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-6_a49a1d4a13e55c497e3995da390f3bae">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>standard <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sample_type <span class="sc">%in%</span> <span class="st">"standard"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-8_138927022ba28cfeb80e7a90dafe3e7c">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>PC_Standards_no_NA <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"Data/ampliconlengths.RDS"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>PC_Standards_no_NA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 46 x 3
+   gene          Assay       amp_len
+   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;  
+ 1 aadA9_F       aadA9       251    
+ 2 ant6-ia_F     ant6-ia     313    
+ 3 ant6-ib_F     ant6-ib     251    
+ 4 aph(3'')-ia_F aph(3'')-ia 301    
+ 5 erm(35)_F     erm(35)     251    
+ 6 erm(B)_F      erm(B)      251    
+ 7 erm(C)_F      erm(C)      251    
+ 8 erm(F)_F      erm(F)      251    
+ 9 erm(Q)_F      erm(Q)      287    
+10 ermA/ermTR_F  ermA/ermTR  251    
+# … with 36 more rows</code></pre>
+</div>
+</div>
+<p>Calculating limit of detection for each gene</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-10_aa608c4006e43328f49e456bd1952471">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>filtered_standard <span class="ot">&lt;-</span> standard <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sample_Name <span class="sc">==</span> Assay)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>lod_max_by_gene <span class="ot">&lt;-</span> filtered_standard <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rConc, Sample_Name) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">any</span>(Call <span class="sc">==</span> <span class="st">"Pass"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Value =</span> <span class="fu">as.numeric</span>(Value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Call <span class="sc">==</span> <span class="st">"Flag"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">max_lod =</span> <span class="fu">max</span>(Value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sample_Name) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(max_lod) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'rConc'. You can override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lod_max_by_gene <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Sample_Name, max_lod)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> rConc)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">add =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> filtered_standard <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rConc, Sample_Name) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">any</span>(Call <span class="sc">==</span> <span class="st">"Pass"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sample_Name, Assay, rConc, Value, Call)  <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span>  </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Call <span class="sc">==</span> <span class="st">"Flag"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(PC_Standards_no_NA) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Assay, rConc, Value, amp_len) <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">counts =</span> <span class="fu">as.numeric</span>(rConc) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>(<span class="dv">10</span><span class="sc">^</span><span class="dv">9</span>)) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">660</span>) <span class="sc">*</span> ((<span class="fl">6.023</span><span class="sc">*</span><span class="dv">10</span><span class="sc">^</span><span class="dv">23</span>)<span class="sc">/</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="fu">as.numeric</span>(amp_len)) <span class="sc">*</span> (.<span class="dv">0067</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Value =</span> <span class="fu">as.numeric</span>(Value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stderr">
+<pre><code>Joining, by = "Assay"</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-12_8b118a7fb481b3f8da7caed8f8405290">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lod_max_by_gene</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 16 x 3
+# Groups:   Sample_Name [16]
+   rConc Sample_Name        max_lod
+   &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt;
+ 1 1e-07 16S_Eub_338_518       24.7
+ 2 1e-06 aadA9                 23.4
+ 3 1e-07 erm(C)                26.4
+ 4 0.001 intI1F165_clinical    27.3
+ 5 1e-05 IS6100                22.2
+ 6 1e-06 strB                  22.9
+ 7 1e-06 sul1 NEW              22.7
+ 8 1e-06 sul2                  22.6
+ 9 1e-07 tetbP                 24.7
+10 1e-06 tetG_F                23.5
+11 1e-06 tetH                  23.3
+12 1e-05 tetL                  19.5
+13 1e-06 tetM                  22.5
+14 1e-06 tetT                  21.9
+15 1e-06 tetW                  21.5
+16 1e-06 tetX                  22.6</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-14_8c0aab988317460a70d5bdba02cb2dd8">
+<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lm_eqn <span class="ot">=</span> <span class="cf">function</span>(df){</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    m <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> df, <span class="at">formula =</span> <span class="fu">as.numeric</span>(Value) <span class="sc">~</span> <span class="fu">log10</span>(counts <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    b <span class="ot">=</span> <span class="fu">coef</span>(m)[<span class="dv">2</span>]  </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">eff =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>((<span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>b))<span class="sc">-</span><span class="dv">1</span>), <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">r2 =</span> <span class="fu">format</span>(<span class="fu">summary</span>(m)<span class="sc">$</span>r.squared, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">LOD =</span> <span class="fu">round</span>(<span class="fu">max</span>(df<span class="sc">$</span>Value), <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">Intercept =</span> <span class="fu">round</span>(<span class="fu">coef</span>(m)[<span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">Slope =</span> <span class="fu">round</span>(<span class="fu">coef</span>(m)[<span class="dv">2</span>], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>st_splits <span class="ot">&lt;-</span>  counts <span class="sc">%&gt;%</span> </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Assay) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>() </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>eqs <span class="ot">&lt;-</span> st_splits <span class="sc">%&gt;%</span> </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(., lm_eqn) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">lapply</span>(st_splits, slice_head, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Assay) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(eqs) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">eq_label =</span> <span class="fu">paste0</span>(<span class="st">"LOD = "</span>, LOD, <span class="st">"&lt;br&gt;r^2 = "</span>, r2, <span class="st">"&lt;br&gt;Efficiency = "</span>, eff, <span class="st">"&lt;br&gt;Slope = "</span>, Slope, <span class="st">"&lt;br&gt;Intercept = "</span>, Intercept))</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>SCPlots <span class="ot">&lt;-</span> counts <span class="sc">%&gt;%</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">as.numeric</span>(<span class="fu">log10</span>(counts <span class="sc">+</span> <span class="dv">1</span>)), <span class="fu">as.numeric</span>(Value))) <span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> Assay, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="cn">NA</span>),</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"lines"</span>),</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="cn">NA</span>),</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Log10 (gene copies per reaction)"</span>,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Ct"</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>)) <span class="sc">+</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">group=</span><span class="dv">1</span>), <span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  ggtext<span class="sc">::</span><span class="fu">geom_richtext</span>(<span class="at">data =</span> labels, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="dv">5</span>, <span class="at">label =</span> eq_label),</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>                        <span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"Times"</span>),</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">75</span>, <span class="st">"in"</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>SCPlots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>Warning: Removed 7 rows containing non-finite values (stat_smooth).</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>Warning: Removed 7 rows containing missing values (geom_point).</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing missing values (geom_smooth).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="1152"></p>
+</div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save a table of the information from each curve</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>LODtable <span class="ot">&lt;-</span> labels <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>eq_label)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>LODtable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 16 x 6
+   Assay                eff r2      LOD Intercept Slope
+   &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 16S_Eub_338_518     95.1 0.952  24.7      28.3 -3.45
+ 2 aadA9               81.7 0.932  23.4      29.4 -3.86
+ 3 erm(C)              82.6 0.969  26.4      29.2 -3.82
+ 4 intI1F165_clinical  49.4 0.855  27.3      47.0 -5.73
+ 5 IS6100              89.7 0.947  22.2      26.1 -3.6 
+ 6 strB                81.5 0.981  22.9      29.5 -3.86
+ 7 sul1 NEW            94.4 0.989  22.7      26.1 -3.46
+ 8 sul2               106.  0.975  22.6      25.1 -3.19
+ 9 tetbP               92.7 0.99   24.7      25.9 -3.51
+10 tetG_F              87.7 0.985  23.5      26.2 -3.66
+11 tetH                82.2 0.999  23.3      28.3 -3.84
+12 tetL                85.9 0.999  19.5      28.3 -3.71
+13 tetM                78.3 0.997  22.5      27.4 -3.98
+14 tetT                86.3 0.998  21.9      26.4 -3.7 
+15 tetW                97.6 0.997  21.5      26.5 -3.38
+16 tetX                77.6 0.998  22.6      27.8 -4.01</code></pre>
+</div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(LODtable, <span class="at">file =</span> <span class="st">"Data/standardcurves.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculating counts in an environmental sample</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-16_654720f7b6507e3fdc0565d1ce468f29">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>counts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 425 x 5
+   Assay           rConc Value amp_len counts
+   &lt;chr&gt;           &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 tetbP           1e-07  24.7 251       2.44
+ 2 sul1 NEW        1e-07  21.8 251       2.44
+ 3 IS6100          1e-07  21.4 251       2.44
+ 4 erm(C)          1e-07  26.4 251       2.44
+ 5 16S_Eub_338_518 1e-07  24.7 257       2.38
+ 6 tetbP           1e-06  22.1 251      24.4 
+ 7 tetbP           1e-06  20.7 251      24.4 
+ 8 tetbP           1e-06  20.5 251      24.4 
+ 9 sul1 NEW        1e-06  22.7 251      24.4 
+10 sul1 NEW        1e-06  20.8 251      24.4 
+# … with 415 more rows</code></pre>
+</div>
+</div>
+<p>Environment Ct values</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-18_7928408f566aa306be6c716a0677aa44">
+<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>water <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sample_type <span class="sc">%in%</span> <span class="st">"water"</span>, <span class="sc">!</span>Sample_Name <span class="sc">==</span> <span class="st">"Supply_Water"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>water</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 6,336 x 21
+   Sample_Name Sample_Type Assay  Assay_Type ID     rConc Value `Calibrated rCo…
+   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           
+ 1 P2_5        Unknown     16S_E… Test       S06-A… 1     18.3… 4.9938279547795…
+ 2 P2_5        Unknown     16S_E… Test       S06-A… 1     18.3… 5.0738800340691…
+ 3 P2_5        Unknown     16S_E… Test       S06-A… 1     17.7… 7.6293726452979…
+ 4 P2_5        Unknown     sul1 … Test       S06-A… 1     999   -1              
+ 5 P2_5        Unknown     sul1 … Test       S06-A… 1     999   -1              
+ 6 P2_5        Unknown     sul1 … Test       S06-A… 1     999   -1              
+ 7 P2_5        Unknown     erm(3… Test       S06-A… 1     999   -1              
+ 8 P2_5        Unknown     erm(3… Test       S06-A… 1     999   -1              
+ 9 P2_5        Unknown     erm(3… Test       S06-A… 1     999   -1              
+10 P2_5        Unknown     tetW   Test       S06-A… 1     999   -1              
+# … with 6,326 more rows, and 13 more variables: Quality &lt;chr&gt;, Call &lt;chr&gt;,
+#   Threshold &lt;chr&gt;, In Range &lt;chr&gt;, Out Range &lt;chr&gt;, Peak Ratio &lt;chr&gt;,
+#   soil_type &lt;chr&gt;, plot &lt;chr&gt;, treatment &lt;chr&gt;, block &lt;chr&gt;,
+#   sample_day &lt;fct&gt;, sample_number &lt;chr&gt;, sample_type &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>soil <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sample_type <span class="sc">%in%</span> <span class="st">"soil"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>soil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 10,944 x 21
+   Sample_Name Sample_Type Assay  Assay_Type ID     rConc Value `Calibrated rCo…
+   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           
+ 1 C_1_TB_1    Unknown     16S_E… Test       S95-A… 1     15.1… 0.0001944385882…
+ 2 C_1_TB_1    Unknown     16S_E… Test       S95-A… 1     14.8… 0.0002366823806…
+ 3 C_1_TB_1    Unknown     16S_E… Test       S95-A… 1     14.9… 0.0002276031810…
+ 4 C_1_TB_1    Unknown     sul1 … Test       S95-A… 1     999   -1              
+ 5 C_1_TB_1    Unknown     sul1 … Test       S95-A… 1     999   -1              
+ 6 C_1_TB_1    Unknown     sul1 … Test       S95-A… 1     999   -1              
+ 7 C_1_TB_1    Unknown     erm(3… Test       S95-A… 1     999   -1              
+ 8 C_1_TB_1    Unknown     erm(3… Test       S95-A… 1     999   -1              
+ 9 C_1_TB_1    Unknown     erm(3… Test       S95-A… 1     999   -1              
+10 C_1_TB_1    Unknown     tetW   Test       S95-A… 1     999   -1              
+# … with 10,934 more rows, and 13 more variables: Quality &lt;chr&gt;, Call &lt;chr&gt;,
+#   Threshold &lt;chr&gt;, In Range &lt;chr&gt;, Out Range &lt;chr&gt;, Peak Ratio &lt;chr&gt;,
+#   soil_type &lt;chr&gt;, plot &lt;chr&gt;, treatment &lt;chr&gt;, block &lt;chr&gt;,
+#   sample_day &lt;fct&gt;, sample_number &lt;chr&gt;, sample_type &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(water<span class="sc">$</span>Sample_Name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code> [1] "P2_5" "P2_3" "P2_1" "P1_5" "P1_3" "P1_1" "P2_6" "P2_4" "P2_2" "P1_6"
+[11] "P1_4" "P1_2" "P3_5" "P3_3" "P3_1" "P3_6" "P3_4" "P3_2" "P9_6" "P4_5"
+[21] "P9_4" "P4_3" "P9_2" "P4_1" "P9_5" "P4_6" "P9_3" "P4_4" "P9_1" "P4_2"
+[31] "P8_6" "P5_5" "P8_4" "P5_3" "P8_2" "P5_1" "P8_5" "P5_6" "P8_3" "P5_4"
+[41] "P8_1" "P5_2" "P7_6" "P6_5" "P7_4" "P6_3" "P7_2" "P6_1" "P7_5" "P6_6"
+[51] "P7_3" "P6_4" "P7_1" "P6_2"</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-20_bf089361b5c5c832f7e1ddd480fc9568">
+<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>get_counts <span class="ot">&lt;-</span> <span class="cf">function</span>(stddf, ctdf, gene){</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#stddf &lt;- counts # use to test</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ctdf &lt;- water # use to test</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#gene &lt;- "tetM" # use to test</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  std <span class="ot">&lt;-</span> stddf <span class="sc">%&gt;%</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Assay <span class="sc">==</span> gene)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  ctd <span class="ot">&lt;-</span> ctdf <span class="sc">%&gt;%</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Assay <span class="sc">==</span> gene)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  inverse.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> std, <span class="at">formula =</span> <span class="fu">log10</span>(counts<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> <span class="fu">as.numeric</span>(Value)) <span class="co"># Note log10 transformation</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  val2 <span class="ot">&lt;-</span> ctd<span class="sc">$</span>Value</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  ctd<span class="sc">$</span>counts <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">^</span> <span class="fu">predict</span>(inverse.lm ,<span class="fu">data.frame</span>(<span class="at">Value =</span> val2), <span class="at">interval =</span> <span class="st">"predict"</span>)[,<span class="dv">1</span>] </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ctd)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-22_45e57db3e56afadd77723b9520ddc669">
+<div class="sourceCode" id="cb30"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(counts<span class="sc">$</span>Assay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code> [1] "tetbP"              "sul1 NEW"           "IS6100"            
+ [4] "erm(C)"             "16S_Eub_338_518"    "strB"              
+ [7] "intI1F165_clinical" "aadA9"              "tetG_F"            
+[10] "sul2"               "tetW"               "tetT"              
+[13] "tetL"               "tetM"               "tetH"              
+[16] "tetX"              </code></pre>
+</div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(water<span class="sc">$</span>Assay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code> [1] "16S_Eub_338_518"    "sul1 NEW"           "erm(36)"           
+ [4] "tetW"               "aac3-Via"           "sul2"              
+ [7] "erm(C)"             "tetX"               "aadA17"            
+[10] "tetbP"              "int1-a-marko"       "tnpA1"             
+[13] "aadA9"              "tetG_F"             "intI1F165_clinical"
+[16] "tnpA2"              "tetH"               "aadD"              
+[19] "tnpA3"              "lnuA"               "tetL"              
+[22] "aphA3"              "tnpA5"              "IS1247"            
+[25] "tetM"               "cadC"               "tnpA6"             
+[28] "IS6100"             "tetT"               "cmr"               
+[31] "tnpA7"              "strB"              </code></pre>
+</div>
+</div>
+<p>By changing high Ct values to NA, we clean up the heatmap by converting these “non detects” to gray color tiles</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-24_a7adbf7c9600ddb6380d8e8644ce06a9">
+<div class="sourceCode" id="cb34"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change high Ct values to NA</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>water<span class="sc">$</span>Value[water<span class="sc">$</span>Value <span class="sc">&gt;</span> <span class="dv">30</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>soil<span class="sc">$</span>Value[soil<span class="sc">$</span>Value <span class="sc">&gt;</span> <span class="dv">30</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-26_a956c0757da33d00fa542d6d09c45f94">
+<div class="cell-output-stdout">
+<pre><code>c("tetbP", "sul1 NEW", "IS6100", "erm(C)", "16S_Eub_338_518", 
+"strB", "intI1F165_clinical", "aadA9", "tetG_F", "sul2", "tetW", 
+"tetT", "tetL", "tetM", "tetH", "tetX")</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")
+Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rConc", "Value", "Calibrated rConc", "Quality", "Call", "Threshold", "In Range", "Out Range", "Peak Ratio", "soil_type", "plot", "treatment", "block", "sample_day", "sample_number", "sample_type", "counts")</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-28_f7bd0410c9472be12153f24903b05bf9">
+<div class="sourceCode" id="cb37"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>WaterCounts <span class="ot">&lt;-</span> WaterCounts <span class="sc">%&gt;%</span> <span class="co"># Add classes to ARGs</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene_class =</span> <span class="fu">case_when</span>(Assay <span class="sc">%in%</span> <span class="fu">unique</span>(WaterCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"^[aa]"</span>, WaterCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"AMG"</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">unique</span>(WaterCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"^[erm]"</span>, WaterCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"MLSB"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">unique</span>(WaterCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"^[sul]"</span>, WaterCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"Sulfa"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">unique</span>(WaterCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"tet"</span>, WaterCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"Tet"</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"intl1"</span>, <span class="st">"intl2"</span>, <span class="st">"intl3"</span>, <span class="st">"IS1247"</span>, <span class="st">"IS6100"</span>, <span class="st">"tnpA2"</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"tnpA5"</span>, <span class="st">"tnpA6"</span>, <span class="st">"tnpA3"</span>, <span class="st">"intI1F165_clinical"</span>, <span class="st">"tnpA1"</span>, <span class="st">"int1-a-marko"</span>, <span class="st">"tnpA7"</span>) <span class="sc">~</span> <span class="st">"MGE"</span>, </span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"cadC"</span>, <span class="st">"cmr"</span>) <span class="sc">~</span> <span class="st">"HM"</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"16S_Eub_338_518"</span>) <span class="sc">~</span> <span class="st">"16S"</span>))</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>WaterCounts<span class="sc">$</span>gene_class_f <span class="ot">=</span> <span class="fu">factor</span>(WaterCounts<span class="sc">$</span>gene_class, <span class="co"># Order the classes</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'AMG'</span>, <span class="st">'MLSB'</span>, <span class="st">'Sulfa'</span>, <span class="st">"Tet"</span>, <span class="st">"MGE"</span>, <span class="st">"HM"</span>, <span class="st">"16S"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-30_48afd9f972a08b2cdb8403186c79a78f">
+<div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>SoilCounts <span class="ot">&lt;-</span> SoilCounts <span class="sc">%&gt;%</span> <span class="co"># Add classes to ARGs</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene_class =</span> <span class="fu">case_when</span>(Assay <span class="sc">%in%</span> <span class="fu">unique</span>(SoilCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"^[aa]"</span>, SoilCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"AMG"</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">unique</span>(SoilCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"^[erm]"</span>, SoilCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"MLSB"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">unique</span>(SoilCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"^[sul]"</span>, SoilCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"Sulfa"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">unique</span>(SoilCounts<span class="sc">$</span>Assay[<span class="fu">grepl</span>(<span class="st">"tet"</span>, SoilCounts<span class="sc">$</span>Assay)]) <span class="sc">~</span> <span class="st">"Tet"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"intl1"</span>, <span class="st">"intl2"</span>, <span class="st">"intl3"</span>, <span class="st">"IS1247"</span>, <span class="st">"IS6100"</span>, <span class="st">"tnpA2"</span>,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"tnpA5"</span>, <span class="st">"tnpA6"</span>, <span class="st">"tnpA3"</span>, <span class="st">"intI1F165_clinical"</span>, <span class="st">"tnpA1"</span>, <span class="st">"int1-a-marko"</span>, <span class="st">"tnpA7"</span>) <span class="sc">~</span> <span class="st">"MGE"</span>, </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"cadC"</span>, <span class="st">"cmr"</span>) <span class="sc">~</span> <span class="st">"HM"</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                                Assay <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"16S_Eub_338_518"</span>) <span class="sc">~</span> <span class="st">"16S"</span>))</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>SoilCounts<span class="sc">$</span>gene_class_f <span class="ot">=</span> <span class="fu">factor</span>(SoilCounts<span class="sc">$</span>gene_class, <span class="co"># Order the classes</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'AMG'</span>, <span class="st">'MLSB'</span>, <span class="st">'Sulfa'</span>, <span class="st">"Tet"</span>, <span class="st">"MGE"</span>, <span class="st">"HM"</span>, <span class="st">"16S"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-32_045c17bdcef4b03855435900647c5cfa">
+<div class="sourceCode" id="cb39"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>norm <span class="ot">&lt;-</span> WaterCounts <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(ID, <span class="fu">c</span>(<span class="st">"plot"</span>, <span class="st">"sample_number"</span>, <span class="st">"Assay"</span>), <span class="at">sep =</span> <span class="st">"."</span>, <span class="at">remove =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(plot, sample_number, Assay) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rep =</span> <span class="fu">seq_along</span>(ID)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(plot, sample_number, rep, treatment, Assay, gene_class, counts, Value) <span class="sc">%&gt;%</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-34_a97ed6932347a5419df2d0d14d028a70">
+<div class="sourceCode" id="cb40"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>soilnorm <span class="ot">&lt;-</span> SoilCounts <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(ID, <span class="fu">c</span>(<span class="st">"plot"</span>, <span class="st">"sample_day"</span>, <span class="st">"sample_number"</span>, <span class="st">"soil_type"</span>, <span class="st">"Assay"</span>), <span class="at">sep =</span> <span class="st">"."</span>, <span class="at">remove =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(plot, sample_day, sample_number, soil_type, Assay) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rep =</span> <span class="fu">seq_along</span>(ID)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(plot, sample_number, sample_day, soil_type, rep, treatment, Assay, gene_class, counts, Value) <span class="sc">%&gt;%</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-36_3b9afbe8c9ab9e9daa68813fd05bbe6b">
+<div class="sourceCode" id="cb41"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>SixS <span class="ot">&lt;-</span> norm <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Assay <span class="sc">==</span> <span class="st">"16S_Eub_338_518"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">SixSCount =</span> counts) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(plot, sample_number, rep, SixSCount, treatment) </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>SoilSixS <span class="ot">&lt;-</span> soilnorm <span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Assay <span class="sc">==</span> <span class="st">"16S_Eub_338_518"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">SixSCount =</span> counts) <span class="sc">%&gt;%</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(plot, sample_number, sample_day, soil_type, rep, SixSCount, treatment)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>dfdf <span class="ot">&lt;-</span> norm <span class="sc">%&gt;%</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(SixS, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"plot"</span>, <span class="st">"sample_number"</span>, <span class="st">"rep"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Assay <span class="sc">==</span> <span class="st">"16S_Eub_338_518"</span>)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>soildfdf <span class="ot">&lt;-</span> soilnorm <span class="sc">%&gt;%</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(SoilSixS, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"plot"</span>, <span class="st">"sample_number"</span>, <span class="st">"sample_day"</span>, <span class="st">"soil_type"</span>, <span class="st">"rep"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Assay <span class="sc">==</span> <span class="st">"16S_Eub_338_518"</span>)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Now got to divide each count of each gene by the 16s number</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> WaterCounts <span class="sc">%&gt;%</span> <span class="co"># Order ARGs based on class</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(gene_class) </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> <span class="fu">dput</span>(<span class="fu">levels</span>(<span class="fu">factor</span>(test<span class="sc">$</span>Assay))) <span class="co"># dput ftw!!!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code>c("16S_Eub_338_518", "aadA9", "erm(C)", "IS6100", "strB", "sul1 NEW", 
+"sul2", "tetbP", "tetG_F", "tetH", "tetL", "tetM", "tetT", "tetW", 
+"tetX")</code></pre>
+</div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>dfdf<span class="sc">$</span>treatment <span class="ot">=</span> <span class="fu">factor</span>(dfdf<span class="sc">$</span>treatment, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'WCS'</span>, <span class="st">'WCSM'</span>, <span class="st">'WCM'</span>))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Also need to set the order of the soil data</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>soildfdf<span class="sc">$</span>treatment <span class="ot">=</span> <span class="fu">factor</span>(soildfdf<span class="sc">$</span>treatment, </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'WCS'</span>, <span class="st">'WCSM'</span>, <span class="st">'WCM'</span>))</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>dfdf<span class="sc">$</span>sample_number <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dfdf<span class="sc">$</span>sample_number)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfdf<span class="sc">$</span>sample_number) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"2.5"</span> <span class="ot">=</span> <span class="st">"1"</span>, <span class="st">"7.5"</span> <span class="ot">=</span> <span class="st">"2"</span>, <span class="st">"12.5"</span> <span class="ot">=</span> <span class="st">"3"</span>, <span class="st">"17.5"</span> <span class="ot">=</span> <span class="st">"4"</span>, <span class="st">"22.5"</span> <span class="ot">=</span> <span class="st">"5"</span>, <span class="st">"27.5"</span> <span class="ot">=</span> <span class="st">"6"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-38_7316bf3ed785be535b4e74cb898bb81c">
+<div class="sourceCode" id="cb44"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>waterdata <span class="ot">&lt;-</span> dfdf <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">norm =</span> counts<span class="sc">/</span>SixSCount)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>soildata <span class="ot">&lt;-</span> soildfdf <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">norm =</span> counts<span class="sc">/</span>SixSCount)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Unfiltered counts in water</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-40_111d01562c607f16a4627820fd53d0f9">
+<div class="sourceCode" id="cb45"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(waterdata<span class="sc">$</span>treatment) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"CS"</span> <span class="ot">=</span> <span class="st">"WCS"</span>, <span class="st">"CSL"</span> <span class="ot">=</span> <span class="st">"WCSM"</span>, <span class="st">"CL"</span> <span class="ot">=</span> <span class="st">"WCM"</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>heatmap2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(waterdata, <span class="fu">aes</span>(<span class="fu">as.factor</span>(sample_number), <span class="fu">ordered</span>(Assay, <span class="at">levels =</span> levels))) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> norm), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"ARG copies </span><span class="sc">\n</span><span class="st">normalized by 16S"</span>)  <span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample time (min) after runoff"</span>, <span class="at">y =</span> <span class="st">"ARG"</span>) <span class="sc">+</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(gene_class <span class="sc">~</span> treatment <span class="sc">+</span> plot, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"Times"</span>),</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">75</span>, <span class="st">"in"</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>heatmap2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-42_2626afed5f915d905a932d60487e55fc">
+<div class="sourceCode" id="cb46"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(waterdata, <span class="fu">aes</span>(<span class="fu">as.factor</span>(sample_number), <span class="fu">ordered</span>(Assay, <span class="at">levels =</span> levels))) <span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> counts), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"ARG copies"</span>)  <span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample time (min) after runoff"</span>, <span class="at">y =</span> <span class="st">"ARG"</span>) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(gene_class <span class="sc">~</span> treatment <span class="sc">+</span> plot, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"Times"</span>),</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">75</span>, <span class="st">"in"</span>)</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Filtered counts in water</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-44_615ea11d61b4fbf350dbd063b7beb1fa">
+<div class="sourceCode" id="cb47"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>waterwithlod <span class="ot">&lt;-</span> waterdata <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lod_max_by_gene, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Assay"</span> <span class="ot">=</span> <span class="st">"Sample_Name"</span>)) </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>waterwithlod<span class="sc">$</span>norm[waterwithlod<span class="sc">$</span>Value <span class="sc">&gt;=</span> waterwithlod<span class="sc">$</span>max_lod] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>waterwithlod<span class="sc">$</span>counts[waterwithlod<span class="sc">$</span>Value <span class="sc">&gt;=</span> waterwithlod<span class="sc">$</span>max_lod] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(waterwithlod<span class="sc">$</span>treatment) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"CS"</span> <span class="ot">=</span> <span class="st">"WCS"</span>, <span class="st">"CSL"</span> <span class="ot">=</span> <span class="st">"WCSM"</span>, <span class="st">"CL"</span> <span class="ot">=</span> <span class="st">"WCM"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="figure-4" class="level1">
+<h1>Figure 4</h1>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-46_4579aa7b8d5091bf95786555f2415936">
+<div class="sourceCode" id="cb48"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#waterwithlod &lt;- waterwithlod %&gt;% mutate(Assay = str_replace(Assay, "tetG_F", "tetG"))</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">#waterwithlod %&gt;% </span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  mutate(Assay = str_replace(Assay, "tetG_F", "tetG")) %&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  count(Assay)</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>heatmap <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(waterwithlod, <span class="fu">aes</span>(<span class="fu">as.factor</span>(sample_number), <span class="fu">ordered</span>(Assay, <span class="at">levels =</span> levels))) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> norm), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"ARG copies </span><span class="sc">\n</span><span class="st">normalized by 16S"</span>)  <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample time (min) after runoff"</span>, <span class="at">y =</span> <span class="st">"ARG"</span>) <span class="sc">+</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(gene_class <span class="sc">~</span> treatment <span class="sc">+</span> plot, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"Times"</span>),</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">75</span>, <span class="st">"in"</span>)) </span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>heatmap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>heatmap<span class="sc">$</span>data <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Assay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 14 x 2
+   Assay        n
+   &lt;chr&gt;    &lt;int&gt;
+ 1 aadA9      198
+ 2 erm(C)     198
+ 3 IS6100     198
+ 4 strB       198
+ 5 sul1 NEW   198
+ 6 sul2       198
+ 7 tetbP      198
+ 8 tetG_F     198
+ 9 tetH       198
+10 tetL       198
+11 tetM       198
+12 tetT       198
+13 tetW       198
+14 tetX       198</code></pre>
+</div>
+</div>
+<ul>
+<li>Astrik on manure ARGs ::: {.cell hash=“ARGs_cache/html/unnamed-chunk-48_5451d193ca86cbfaad6b1b67925f23e3”}</li>
+</ul>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">tetbP =</span> <span class="st">"* tetbP "</span>, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">aphA3 =</span> <span class="st">"* aphA3 "</span>, </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetT =</span> <span class="st">"* tetT "</span>, </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetW =</span> <span class="st">"* tetW "</span>, </span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">erm(C)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"* erm(C)"</span>, </span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetX =</span> <span class="st">"* tetX "</span>, </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">tnpA1 =</span> <span class="st">"* tnpA1 "</span>,</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetH =</span> <span class="st">"* tetH "</span>, </span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">lnuA =</span> <span class="st">"* lnuA "</span>, </span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">tnpA5 =</span> <span class="st">"* tnpA5 "</span>, </span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetM =</span> <span class="st">"* tetM "</span>, </span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">cmr =</span> <span class="st">"* cmr "</span>,</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetG_F =</span> <span class="st">"tetG "</span>,</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">sul1 NEW</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"sul1"</span>)</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>labels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code>     tetbP      aphA3       tetT       tetW     erm(C)       tetX      tnpA1 
+"* tetbP " "* aphA3 "  "* tetT "  "* tetW " "* erm(C)"  "* tetX " "* tnpA1 " 
+      tetH       lnuA      tnpA5       tetM        cmr     tetG_F   sul1 NEW 
+ "* tetH "  "* lnuA " "* tnpA5 "  "* tetM "   "* cmr "    "tetG "     "sul1" </code></pre>
+</div>
+<p>::: ::: {.cell hash=“ARGs_cache/html/unnamed-chunk-50_b4fe11b0b749b059204434f321702c78”}</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="sc">+</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> labels</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/Fig4.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="fl">7.5</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>:::</p>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-52_988e6b0ecbefd4603bf4b08d223c5cac">
+<div class="sourceCode" id="cb55"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(waterwithlod, <span class="fu">aes</span>(<span class="fu">as.factor</span>(sample_number), <span class="fu">ordered</span>(Assay, <span class="at">levels =</span> levels))) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> counts), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"ARG copies"</span>)  <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample time (min) after runoff"</span>, <span class="at">y =</span> <span class="st">"ARG"</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(gene_class <span class="sc">~</span> treatment <span class="sc">+</span> plot, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"Times"</span>),</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">75</span>, <span class="st">"in"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A few genes were detected in low enough quantities that they are no longer visible in the filtered data set. Overall, the results do not change much, but there are changes in pairwise significance for some genes that I need to evaluate further.</p>
+</section>
+<section id="supp-figure-s3" class="level1">
+<h1>Supp Figure S3</h1>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-54_6008f0c126ad731bb9a673087ecd6502">
+<div class="sourceCode" id="cb56"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>soilwithlod <span class="ot">&lt;-</span> soildata <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lod_max_by_gene, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Assay"</span> <span class="ot">=</span> <span class="st">"Sample_Name"</span>)) </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>soilwithlod<span class="sc">$</span>norm[soilwithlod<span class="sc">$</span>Value <span class="sc">&gt;=</span> soilwithlod<span class="sc">$</span>max_lod] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>soilwithlod<span class="sc">$</span>counts[soilwithlod<span class="sc">$</span>Value <span class="sc">&gt;=</span> soilwithlod<span class="sc">$</span>max_lod] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(soilwithlod<span class="sc">$</span>treatment) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"CS"</span> <span class="ot">=</span> <span class="st">"WCS"</span>, <span class="st">"CSL"</span> <span class="ot">=</span> <span class="st">"WCSM"</span>, <span class="st">"CL"</span> <span class="ot">=</span> <span class="st">"WCM"</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>heatmap2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(soilwithlod, <span class="fu">aes</span>(<span class="fu">as.factor</span>(sample_day), <span class="fu">ordered</span>(Assay, <span class="at">levels =</span> levels))) <span class="sc">+</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> norm), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"ARG copies </span><span class="sc">\n</span><span class="st">normalized by 16S"</span>)  <span class="sc">+</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample day"</span>, <span class="at">y =</span> <span class="st">"ARG"</span>) <span class="sc">+</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(gene_class <span class="sc">~</span> treatment <span class="sc">+</span> plot, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"Times"</span>),</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">1.4</span>),</span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">75</span>, <span class="st">"in"</span>)</span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a>heatmap2 <span class="sc">+</span></span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(</span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> labels</span>
+<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ARGs_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/SupFigS3.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="fl">7.5</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+</body></html>

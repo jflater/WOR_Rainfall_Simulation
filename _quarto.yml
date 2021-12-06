@@ -7,23 +7,26 @@ execute:
   freeze: true # re-render only when source changes
   cache: true
    
-site:
+website:
+
+  title: "Prairie Strips Impact on Transport of Antibiotic Resistance Indicators in Poultry Litter"
 
   sidebar:
     style: "docked"
-    collapese-level: 2
+    collapse-level: 2
     contents: 
-      - ManuscriptWalkthrough.Rmd
       - 16S.qmd
+      - ARGs.qmd
+      - WaterFlow.qmd
       
   navbar: 
     background: primary
     search: true
-    title: "Quarto practice site"
+    # title: "Quarto practice site"
     
     right: 
       - text: "GERMS Lab"
-        url: "http://germslab.org"
+        href: http://germslab.org
     
     
 format: 
