@@ -566,13 +566,15 @@ Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rCon
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>SoilCounts<span class="sc">$</span>gene_class_f <span class="ot">=</span> <span class="fu">factor</span>(SoilCounts<span class="sc">$</span>gene_class, <span class="co"># Order the classes</span></span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'AMG'</span>, <span class="st">'MLSB'</span>, <span class="st">'Sulfa'</span>, <span class="st">"Tet"</span>, <span class="st">"MGE"</span>, <span class="st">"HM"</span>, <span class="st">"16S"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-32_045c17bdcef4b03855435900647c5cfa">
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-32_ee742800b3852c571f92c1deb95cb271">
 <div class="sourceCode" id="cb39"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>norm <span class="ot">&lt;-</span> WaterCounts <span class="sc">%&gt;%</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(ID, <span class="fu">c</span>(<span class="st">"plot"</span>, <span class="st">"sample_number"</span>, <span class="st">"Assay"</span>), <span class="at">sep =</span> <span class="st">"."</span>, <span class="at">remove =</span> F) <span class="sc">%&gt;%</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(plot, sample_number, Assay) <span class="sc">%&gt;%</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rep =</span> <span class="fu">seq_along</span>(ID)) <span class="sc">%&gt;%</span></span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(plot, sample_number, rep, treatment, Assay, gene_class, counts, Value) <span class="sc">%&gt;%</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(norm, <span class="at">file =</span> <span class="st">"Data/norm.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-34_a97ed6932347a5419df2d0d14d028a70">
 <div class="sourceCode" id="cb40"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>soilnorm <span class="ot">&lt;-</span> SoilCounts <span class="sc">%&gt;%</span></span>
@@ -717,8 +719,9 @@ Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rCon
 </div>
 </div>
 <ul>
-<li>Astrik on manure ARGs ::: {.cell hash=“ARGs_cache/html/unnamed-chunk-48_5451d193ca86cbfaad6b1b67925f23e3”}</li>
+<li>Astrik on manure ARGs</li>
 </ul>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-48_5451d193ca86cbfaad6b1b67925f23e3">
 <div class="sourceCode" id="cb51"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">tetbP =</span> <span class="st">"* tetbP "</span>, </span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">aphA3 =</span> <span class="st">"* aphA3 "</span>, </span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">tetT =</span> <span class="st">"* tetT "</span>, </span>
@@ -740,7 +743,8 @@ Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rCon
       tetH       lnuA      tnpA5       tetM        cmr     tetG_F   sul1 NEW 
  "* tetH "  "* lnuA " "* tnpA5 "  "* tetM "   "* cmr "    "tetG "     "sul1" </code></pre>
 </div>
-<p>::: ::: {.cell hash=“ARGs_cache/html/unnamed-chunk-50_b4fe11b0b749b059204434f321702c78”}</p>
+</div>
+<div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-50_b4fe11b0b749b059204434f321702c78">
 <div class="sourceCode" id="cb53"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="sc">+</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
@@ -750,7 +754,7 @@ Joining, by = c("Sample_Name", "Sample_Type", "Assay", "Assay_Type", "ID", "rCon
 <p><img src="ARGs_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Figures/Fig4.jpeg"</span>, <span class="at">plot =</span> <span class="fu">last_plot</span>(), <span class="at">device =</span> <span class="st">"jpeg"</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="fl">7.5</span>, <span class="at">dpi =</span> <span class="dv">350</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p>
+</div>
 <div class="cell" data-hash="ARGs_cache/html/unnamed-chunk-52_988e6b0ecbefd4603bf4b08d223c5cac">
 <div class="sourceCode" id="cb55"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(waterwithlod, <span class="fu">aes</span>(<span class="fu">as.factor</span>(sample_number), <span class="fu">ordered</span>(Assay, <span class="at">levels =</span> levels))) <span class="sc">+</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> counts), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>

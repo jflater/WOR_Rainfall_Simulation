@@ -10,6 +10,7 @@ date: "2/15/2021"
 This plot shows the flow rate for each sample from each plot. 
 
 If we plot MAB vs. flow, do prairie strips have an impact? 
+
 ```{r}
 library(readxl)
 library(tidyverse)
@@ -21,12 +22,7 @@ library(rstatix)
 mabbarplot <- readRDS(file = "Data/mabbarplot.RDS")
 
 
-
-mabbarplot$data
-
 flow <- read_excel("Data/WOR_Water_flow.xlsx")
-
-glimpse(flow)
 
 flow$sample_number <- as.character(flow$sample_number)
 ```

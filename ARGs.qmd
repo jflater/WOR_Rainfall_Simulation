@@ -239,6 +239,8 @@ norm <- WaterCounts %>%
 
 saveRDS(norm, file = "Data/norm.RDS")
 ```
+
+
 ```{r}
 soilnorm <- SoilCounts %>%
   unite(ID, c("plot", "sample_day", "sample_number", "soil_type", "Assay"), sep = ".", remove = F) %>%
@@ -333,6 +335,7 @@ levels(waterwithlod$treatment) <- list("CS" = "WCS", "CSL" = "WCSM", "CL" = "WCM
 ```
 
 # Figure 4
+
 ```{r}
 #waterwithlod <- waterwithlod %>% mutate(Assay = str_replace(Assay, "tetG_F", "tetG"))
 #waterwithlod %>% 
@@ -357,6 +360,7 @@ heatmap$data %>%
 ```
 
 * Astrik on manure ARGs
+
 ```{r}
 labels <- c(tetbP = "* tetbP ", 
             aphA3 = "* aphA3 ", 
@@ -374,6 +378,8 @@ labels <- c(tetbP = "* tetbP ",
             `sul1 NEW` = "sul1")
 labels
 ```
+
+
 ```{r}
 heatmap +
   scale_y_discrete(
